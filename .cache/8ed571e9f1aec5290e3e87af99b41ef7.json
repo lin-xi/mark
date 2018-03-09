@@ -1,0 +1,1 @@
+{"dependencies":[],"generated":{"js":"\"use strict\";\n\n// import Vue from 'vue'\n// import App from './App.vue'\n// // import router from './routers.js'\n// Vue.component('App', App)\n\n// let app = new Vue({\n//   el: '#app',\n//   // router,\n//   render: h => h(App)\n// })\nfunction start() {\n  alert(\"hello,world\");\n}"},"hash":"6feb39186997b66a29b190bf1ad79923"}
