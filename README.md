@@ -1,2 +1,10 @@
+![image](./logo.jpg)
+
 # mark
-mark is an markdown editor app for mac
+mark is an markdown editor app for mac based on [tui.editor](https://nhnent.github.io/tui.editor/)
+
+
+![image](./screen-shot.png)
+
+
+

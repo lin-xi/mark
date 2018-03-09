@@ -107,7 +107,9 @@ export default {
       this.showEditor = false;
     },
     tabChange(tabName) {
-      if (tabName == '周') {
+      if (tabName == '日') {
+        this.compo = Welcome
+      } else if (tabName == '周') {
         this.compo = WeekList
       } else if (tabName == '月') {
         this.compo = MonthList
