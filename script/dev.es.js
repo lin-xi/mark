@@ -9,7 +9,7 @@ const option = {
   // publicUrl: './'
 }
 
-let index = new Parcel(path.join(__dirname, '../index.html'), option)
+let index = new Parcel(path.join(__dirname, '../template.html'), option)
 index.bundle().then(() => {
   console.log('>> done')
   var proc = require('child_process')

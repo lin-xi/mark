@@ -25,6 +25,7 @@
   "homepage": "https://github.com/lin-xi/mark#readme",
   "devDependencies": {
     "css-loader": "^0.28.10",
+    "fs-extra": "^5.0.0",
     "less": "^2.7.3",
     "opn": "^5.2.0",
     "parcel-bundler": "^1.6.2",
