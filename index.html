@@ -9,12 +9,61 @@
     <meta content="email=no" name="format-detection">
     <meta name="msapplication-tap-highlight" content="no">
     <link rel="icon" href="./logo.png" type="image/x-png">
+    <link rel="stylesheet" type="text/css" media="all" href="./pages/page.less">
     <title>Mark</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.3.1/gl-matrix-min.js"></script>
+
   </head>
   <body>
-    <div id="app">
-      <img style="position:absolute; top:50%; left: 50%; transform: translate(-50%, -50%)" src="./logo.svg"/>
+    <div class="section">
+      <canvas id="canvas"></canvas>
+      <div class="header-mask"></div>
+      <div class="header-bar">
+        <img class="logo" src="./pages/logo-small.png"/>
+        <span class="logo-text">Mark</span>
+        <span class="item"></span>
+        <span class="item"></span>
+        <span class="item"></span>
+        <span class="item"></span>
+        <span class="item"><a href="http://github.com/lin-xi/mark">github</a></span>
+        <span class="item"><img src="https://img.shields.io/github/stars/lin-xi/mark.svg?style=social&amp;label=Star"/></span>
+        <span class="item"><a href="#sceen">截屏</a></span>
+        <span class="item"><a href="#about">关于</a></span>
+      </div>
+      <div class="slogan">
+        简洁的Todo，Markdown工具
+      </div>
+      <div class="download"><a href="https://github.com/lin-xi/mark/releases/download/1.0.0/Mark-1.0.0.dmg.zip">下载</a></div>
     </div>
-    <script src="./main.js"></script>
+
+    <div class="section">
+      <a name="sceen"></a>
+      <div class="screen">
+        <div class="item"><img src="./pages/screen-shot.png"/></div>
+        <div class="item"><img src="./pages/screen-shot2.png"/></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <a name="about"></a>
+      <div class="about">
+        <div>
+          <img width="128px" height="128px" src="./logo.svg"/>
+        </div>
+        <br>
+        Mark是一个免费的开源软件，致力于工作效率的提升
+        <br>
+        欢迎交流和提出宝贵意见
+        <br>
+        <div class="memu">
+          <a href="https://github.com/lin-xi/mark/issues">意见建议</a>
+          <a href="https://github.com/lin-xi/mark">点赞</a>
+          <a href="https://github.com/lin-xi/mark/issues"><img src="./pages/money.png"/>捐赠</a>
+          <a href="https://github.com/lin-xi">作者：linxi</a>
+        </div>
+      </div>
+    </div>
+
+    <script src="./pages/main.js"></script>
   </body>
 </html>

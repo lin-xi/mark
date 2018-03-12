@@ -5,8 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "rimraf ./dist && node script/dev.js",
-    "pack": "rimraf ./dist && rimraf ./pack && node script/pack.js",
-    "unpack": "asar extract /Users/baidu/work/workspace/javascript/github/mark/pack/mac/Mark.app/Contents/Resources/app.asar app"
+    "build": "rimraf ./dist && node script/build.js"
   },
   "repository": {
     "type": "git",
@@ -25,40 +24,11 @@
   },
   "homepage": "https://github.com/lin-xi/mark#readme",
   "devDependencies": {
-    "asar": "^0.14.2",
     "css-loader": "^0.28.10",
-    "devtron": "^1.4.0",
-    "electron": "^1.8.2",
-    "electron-builder": "^20.2.0",
-    "electron-packager": "^11.0.1",
     "less": "^2.7.3",
     "opn": "^5.2.0",
     "parcel-bundler": "^1.6.2",
-    "parcel-plugin-vue": "^1.5.0",
     "rimraf": "^2.6.2",
-    "standard": "^11.0.0",
-    "vue-hot-reload-api": "^2.3.0",
-    "vue-template-compiler": "^2.5.13"
-  },
-  "dependencies": {
-    "adm-zip": "^0.4.7",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-register": "^6.26.0",
-    "codemirror": "^5.34.0",
-    "electron-log": "^2.2.14",
-    "electron-logger": "0.0.3",
-    "fs-extra": "^5.0.0",
-    "highlight.js": "^9.12.0",
-    "moment": "^2.20.1",
-    "nedb": "^1.8.0",
-    "node-fetch": "^2.0.0",
-    "tui-editor": "^1.0.2",
-    "uuid": "^3.2.1",
-    "vue": "^2.5.13",
-    "vue-router": "^3.0.1",
-    "w-ui": "^1.0.8"
+    "standard": "^11.0.0"
   }
 }
