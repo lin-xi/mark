@@ -5,7 +5,7 @@ mark是一个mac下的免费开源的markdown编辑程序，使用[tui.editor](h
 
 # 下载安装
 
-[Mark 1.0.0](https://github.com/lin-xi/mark/releases/download/1.0.0/Mark-1.0.0.zip)
+[Mark 1.0.0](https://github.com/lin-xi/mark/releases/download/1.0.0/Mark-1.0.0.dmg.zip)
 
 
 [历史版本](https://github.com/lin-xi/mark/releases)
