@@ -8,7 +8,7 @@ const option = {
   watch: true,
   cache: false,
   // target: 'electron',
-  // publicUrl: './'
+  publicUrl: './dist/'
 }
 
 let index = new Parcel(path.join(__dirname, '../template.html'), option)
