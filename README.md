@@ -16,5 +16,5 @@ mark是一个mac下的免费开源的markdown编辑程序，使用[tui.editor](h
 ![image](./screen-shot2.png)
 
 
-`mark致力于做好用的效率提升工具，欢迎交流并提出宝贵意见`
+** Mark致力于做好用的效率提升工具，欢迎交流并提出宝贵意见 **
 
