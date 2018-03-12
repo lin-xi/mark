@@ -63,8 +63,8 @@ function createWindow() {
 
   const debug = /--debug/.test(process.argv[2])
   if (debug) {
-    // win.webContents.openDevTools()
-    // win.maximize()
+    win.webContents.openDevTools()
+    win.maximize()
   }
 
   win.on('close', function(e){

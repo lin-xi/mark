@@ -39,16 +39,14 @@
               </div>
             </div>
             <div class="save-status">
-              <span class="unsave" v-if="unsave"></span>
+              <span class="unsave" v-show="unsaved"></span>
               {{saveStatus}}
             </div>
           </div>
           <div ref="editor">
           </div>
           <div class="tool">
-            <span>保存</span>
             <span @click="doRemove">删除</span>
-            <span></span>
           </div>
         </div>
       </div>
@@ -98,7 +96,11 @@ export default {
           _id: this.id
         })
         .then(data => {
+          this.id = "";
+          this.category = "",
+          this.categoryName = "默认"
           this.editor.setValue('');
+          this.unsaved = false;
           this.queryAll();
         });
     },
@@ -204,15 +206,17 @@ export default {
         let val = this.editor.getValue();
         let lines = val.split(/\n/m)
         if (lines && lines.length > 0) {
+          let subject = lines[0].replace(/[#*_~]/g, '')
           if (this.id) {
-            store.updateNote({_id: this.id}, { subject: lines[0], content: val }).then(data => {
+            store.updateNote({_id: this.id}, { subject: subject, content: val }).then(data => {
+              this.unsaved = false
               this.queryAll();
             });
           } else {
             store.addNote({
               table: "note",
               category: this.category,
-              subject: lines[0],
+              subject: subject,
               content: val,
               createTime: Date.now()
             }).then(data => {
@@ -353,12 +357,13 @@ export default {
             top: 10px;
             font-size: 12px;
             color: #ccc;
+
             .unsave{
               display: inline-block;
               width: 10px;
               height: 10px;
               border-radius: 5px;
-              background-color:maroon;
+              background-color: red;
               margin-right: 4px;
             }
           }

@@ -27,8 +27,6 @@
           </div>
           <div class="tool">
             <span @click="doRemove">删除</span>
-            <span></span>
-            <span></span>
           </div>
         </div>
         <div v-show="!showEditor" class="welcome">
@@ -107,7 +105,7 @@ export default {
       this.showEditor = false;
     },
     tabChange(tabName) {
-      if (tabName == '日') {
+      if (tabName == '天') {
         this.compo = Welcome
       } else if (tabName == '周') {
         this.compo = WeekList
