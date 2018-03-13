@@ -1,6 +1,6 @@
 ![image](./pages/logo-small.png)
 
-# mark [官网](https://lin-xi.github.io/mark/)
+#  [Mark](https://lin-xi.github.io/mark/)   https://lin-xi.github.io/mark/
 mark是一个mac下的免费开源的markdown编辑程序，使用[tui.editor](https://nhnent.github.io/tui.editor/)和electron构建。
 
 # 下载安装
