@@ -49,6 +49,15 @@ tui.editor（TOAST UI Editor）是一款所见即所得的Markdown编辑器。TO
 
 Mark致力于做好用的效率提升工具，欢迎交流并提出宝贵意见
 
+# 发布日志  Release Log
+
+## 1.1.0
+
+**修复bug**
++ 列表区没有设置滚动区域
++ 导出数据，点击取消报错
++ Note页面，编辑器没处理window resize 事件
+
 # 致谢  Special thanks
 
 [electron](https://github.com/electron/electron)
