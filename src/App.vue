@@ -17,6 +17,7 @@
         </div>
         <div class="about-dialog">
           <p class="logo"><img src="./logo.png"/></p>
+          <p class="version">1.1.0</p>
           <p class="desc">Mark是一个完全免费的开源软件，致力于做好用的效率提升工具，欢迎你提出宝贵的的意见<br><br>
           如果喜欢，请给我的github项目点赞<br>
           如果觉得很棒，也可以捐赠共勉，谢谢</p>
@@ -46,46 +47,42 @@
 
 <script>
 import IconText from "./components/IconText.vue";
-const {
-  ipcRenderer,
-  shell
-} = window.require('electron')
+const { ipcRenderer, shell } = window.require("electron");
 
 export default {
   name: "app",
   components: {
     IconText
   },
-  data () {
+  data() {
     return {
       showAbout: false
-    }
+    };
   },
   methods: {
     doHideAbout() {
-      this.showAbout = false
+      this.showAbout = false;
     },
     doShowAbout() {
-      this.showAbout = true
+      this.showAbout = true;
     },
     jump(url) {
-      shell.openExternal(url)
+      shell.openExternal(url);
     }
   },
   mounted() {
     document.documentElement.style.fontSize =
       window.innerWidth * 50 / 750 + "px";
 
-    ipcRenderer.on('menu-command', (event, command) => {
-      switch(command) {
-        case 'setting':
-
-        break;
-        case 'about':
-          this.showAbout = true
-        break;
+    ipcRenderer.on("menu-command", (event, command) => {
+      switch (command) {
+        case "setting":
+          break;
+        case "about":
+          this.showAbout = true;
+          break;
       }
-    })
+    });
   }
 };
 </script>
@@ -101,7 +98,8 @@ body {
   width: 100%;
   height: 100%;
   background-color: #fff;
-  font-family: arial, -apple-system, BlinkMacSystemFont, "Microsoft YaHei", sans-serif;
+  font-family: arial, -apple-system, BlinkMacSystemFont, "Microsoft YaHei",
+    sans-serif;
 }
 ul,
 li {
@@ -145,14 +143,14 @@ a {
     .menu-area {
       flex: 0 0 90px;
       position: relative;
-      background: rgb(60,66,82);
+      background: rgb(60, 66, 82);
       border-right: 1px rgb(229, 229, 229) solid;
       text-align: center;
 
       user-select: none;
       -webkit-app-region: drag;
 
-      img{
+      img {
         width: 60px;
         height: 60px;
         margin-top: 40px;
@@ -177,7 +175,7 @@ a {
       position: relative;
     }
 
-    .about-panel{
+    .about-panel {
       position: fixed;
       left: 0;
       top: 0;
@@ -185,13 +183,13 @@ a {
       height: 100%;
       z-index: 999;
 
-      .mask{
+      .mask {
         width: 100%;
         height: 100%;
-        background-color: rgba(0,0,0, 0.1)
+        background-color: rgba(0, 0, 0, 0.1);
       }
 
-      .about-dialog{
+      .about-dialog {
         position: absolute;
         left: 50%;
         top: 50%;
@@ -202,20 +200,24 @@ a {
         background: #fff;
         color: #999;
         font-size: 16px;
-        .logo{
-          padding: 20px;
+        .logo {
+          padding: 20px 0 0 0;
           text-align: center;
-          img{
+          img {
             width: 80px;
           }
         }
-        .desc{
+        .version {
+          text-align: center;
+          padding-bottom: 5px;
+        }
+        .desc {
           padding: 0 50px 10px 50px;
         }
-        .link{
+        .link {
           display: flex;
           padding: 20px 50px;
-          div{
+          div {
             border: 1px #fff solid;
             flex: 1;
             padding: 20px;

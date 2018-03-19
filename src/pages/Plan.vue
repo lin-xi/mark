@@ -91,7 +91,7 @@ export default {
           _id: this.id
         })
         .then(data => {
-          this.showEditor = false
+          this.showEditor = false;
           eventHub.$emit("reload");
         });
     },
@@ -105,16 +105,16 @@ export default {
       this.showEditor = false;
     },
     tabChange(tabName) {
-      if (tabName == '天') {
-        this.compo = Welcome
-      } else if (tabName == '周') {
-        this.compo = WeekList
-      } else if (tabName == '月') {
-        this.compo = MonthList
-      } else if (tabName == '季') {
-        this.compo = SeasonList
-      } else if (tabName == '年') {
-        this.compo = YearList
+      if (tabName == "天") {
+        this.compo = Welcome;
+      } else if (tabName == "周") {
+        this.compo = WeekList;
+      } else if (tabName == "月") {
+        this.compo = MonthList;
+      } else if (tabName == "季") {
+        this.compo = SeasonList;
+      } else if (tabName == "年") {
+        this.compo = YearList;
       }
     }
   },
@@ -142,20 +142,19 @@ export default {
 
       this.editor.eventManager.listen("blur", event => {
         let val = this.editor.getValue();
-        store.updateTask({_id: this.id}, { content: val })
-        .then(data => {
+        store.updateTask({ _id: this.id }, { content: val }).then(data => {
           eventHub.$emit("reload");
         });
       });
 
-      window.addEventListener('resize', () => {
-        if (this.editor.currentMode == 'wysiwyg'){
-          let nh = window.innerHeight - 170 + 'px'
-          let hh = window.innerHeight - 110 + 'px'
-          this.$refs.editor.style.height = hh
-          this.editor.wwEditor.setHeight(nh)
+      window.addEventListener("resize", () => {
+        if (this.editor.currentMode == "wysiwyg") {
+          let nh = window.innerHeight - 170 + "px";
+          let hh = window.innerHeight - 110 + "px";
+          this.$refs.editor.style.height = hh;
+          this.editor.wwEditor.setHeight(nh);
         }
-      })
+      });
     });
   }
 };
@@ -170,9 +169,13 @@ export default {
   .body-box {
     width: 100%;
     height: 100%;
+    overflow: hidden;
     display: flex;
+
     .list {
       flex: 0 0 400px;
+      height: 100%;
+      overflow: hidden;
       position: relative;
 
       .wui-tab-nav-item {

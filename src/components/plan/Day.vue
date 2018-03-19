@@ -58,10 +58,10 @@ export default {
       tasks: "",
       content: "",
       day: moment().format("YYYYMMDD"),
-      week: moment().format('w'),
+      week: moment().format("w"),
       month: moment().format("M"),
       season: moment().format("Q"),
-      year: moment().format("YYYY"),
+      year: moment().format("YYYY")
     };
   },
   methods: {
@@ -69,14 +69,20 @@ export default {
       this.showInput = !this.showInput;
     },
     queryAll() {
-      let pc = store.queryAll({
-        table: "category",
-        day: this.day
-      }, {createTime: 1});
-      let pt = store.queryAll({
-        table: "task",
-        day: this.day
-      }, {createTime: 1});
+      let pc = store.queryAll(
+        {
+          table: "category",
+          day: this.day
+        },
+        { createTime: 1 }
+      );
+      let pt = store.queryAll(
+        {
+          table: "task",
+          day: this.day
+        },
+        { createTime: 1 }
+      );
 
       Promise.all([pc, pt]).then(data => {
         let cats = data[0];
@@ -136,7 +142,7 @@ export default {
               createTime: Date.now()
             })
             .then(data => {
-              this.showInput = false
+              this.showInput = false;
               this.queryAll();
             });
         }
@@ -149,10 +155,10 @@ export default {
       this.showSelect = !this.showSelect;
     },
     selectChange(cat) {
-      this.category = cat.id
-      this.categoryName = cat.name || '默认'
-      this.showSelect = false
-      this.$refs.task.focus()
+      this.category = cat.id;
+      this.categoryName = cat.name || "默认";
+      this.showSelect = false;
+      this.$refs.task.focus();
     },
     stateChange(task) {
       store
@@ -175,6 +181,8 @@ export default {
     eventHub.$on("reload", () => {
       this.queryAll();
     });
+
+    this.$el.style.height = window.innerHeight - 40 + "px";
   }
 };
 </script>
@@ -182,6 +190,9 @@ export default {
 <style lang="less">
 .com-plan-day {
   padding: 10px;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
 
   .date-area {
     display: flex;
@@ -189,69 +200,70 @@ export default {
     justify-content: space-between;
     padding-bottom: 15px;
   }
-  .add-area{
-      position: relative;
-      input{
-        border: 1px #e0e0e0 solid;
-        height: 40px;
-        width: 380px;
-        border-radius: 4px;
-        outline: none;
-        font-size: 14px;
-        text-indent: 10px;
+  .add-area {
+    position: relative;
+    input {
+      border: 1px #e0e0e0 solid;
+      height: 40px;
+      width: 380px;
+      border-radius: 4px;
+      outline: none;
+      font-size: 14px;
+      text-indent: 10px;
+    }
+    .cat-label {
+      position: absolute;
+      right: 10px;
+      top: 8px;
+      padding: 2px 10px;
+      border-radius: 4px;
+      background-color: lightgreen;
+      cursor: pointer;
+      color: #666;
+    }
+    .cat-select {
+      position: absolute;
+      right: 10px;
+      top: 35px;
+      background-color: #fff;
+      width: 100px;
+      border: 1px #e5e5e5 solid;
+      .cat-select-item {
+        padding: 10px;
       }
-      .cat-label{
-        position: absolute;
-        right: 10px;
-        top: 8px;
-        padding: 2px 10px;
-        border-radius: 4px;
-        background-color: lightgreen;
+      .cat-select-item:hover {
+        background-color: #f0f0f0;
         cursor: pointer;
-        color: #666;
-      }
-      .cat-select{
-        position: absolute;
-        right: 10px;
-        top: 35px;
-        background-color: #fff;
-        width: 100px;
-        border: 1px #e5e5e5 solid;
-        .cat-select-item{
-          padding: 10px;
-        }
-        .cat-select-item:hover{
-          background-color: #f0f0f0;
-          cursor: pointer;
-        }
       }
     }
+  }
 
-    .list-area{
-      padding: 10px 0;
+  .list-area {
+    padding: 10px 0;
+    flex: 1;
+    overflow: auto;
 
-      .category {
-        font-weight: bolder;
-        padding: 20px 10px 8px 10px;
-        border-bottom: 1px #f0f0f0 solid;
-        display: flex;
-        justify-content: space-between;
+    .category {
+      font-weight: bolder;
+      padding: 20px 10px 8px 10px;
+      border-bottom: 1px #f0f0f0 solid;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .task-list {
+      li {
+        padding: 10px;
+        font-size: 20px;
+        background-color: #f4f5f6;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-radius: 4px;
       }
-
-      .task-list {
-        li {
-          padding: 10px;
-          font-size: 20px;
-          background-color: #f4f5f6;
-          margin-top: 10px;
-          margin-bottom: 10px;
-          border-radius: 4px;
-        }
-        li.done{
-          background-color: lightgreen;
-        }
+      li.done {
+        background-color: lightgreen;
       }
     }
-  
+  }
 }
 </style>

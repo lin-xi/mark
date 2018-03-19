@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './routers.js'
 Vue.component('App', App)
 
-window.eventHub = new Vue();
+window.eventHub = new Vue()
 let app = new Vue({
   el: '#app',
   router,
