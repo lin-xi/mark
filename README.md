@@ -1,6 +1,6 @@
 ![image](./pages/logo-small.png)
 
-#  [Mark](https://lin-xi.github.io/mark/)   
+#  [Mark](https://lin-xi.github.io/mark/)  1.1.0
 https://lin-xi.github.io/mark/
 
 
