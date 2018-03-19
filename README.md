@@ -1,7 +1,30 @@
 ![image](./pages/logo-small.png)
 
-# mark
+#  [Mark](https://lin-xi.github.io/mark/)   
+https://lin-xi.github.io/mark/
+
+
 mark是一个mac下的免费开源的markdown编辑程序，使用[tui.editor](https://nhnent.github.io/tui.editor/)和electron构建。
+
+tui.editor（TOAST UI Editor）是一款所见即所得的Markdown编辑器。TOAST UI Editor提供Markdown模式和WYSIWYG模式。它的功能非常强大，你可以编辑表格，UML图和图表等。
+
+### TOAST UI Editor的Markdown模式的特点有：
+
++ 所见即所得。你在编辑Markdown的同时，可以预览生成的HTML页面。
+
++ 异步滚动。可以在Markdown和预览之间进行异步滚动。
+
++ 列表自动缩进。
+
++ 语法高亮。
+
+### TOAST UI Editor的WYSIWYG模式的特点有：
+
++ 可以直接从浏览器，excel，powerpoint等复制内容并进行粘贴。
+
++ 支持170+种语言的语法高亮。
+
++ 支持表格。
 
 # 下载安装
 
