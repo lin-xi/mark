@@ -52,7 +52,7 @@ function initialize () {
 // 创建窗口
 function createWindow () {
   const windowOptions = {
-    width: 1000,
+    width: 1200,
     minWidth: 800,
     height: 600,
     title: app.getName(),

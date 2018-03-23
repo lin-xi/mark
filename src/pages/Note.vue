@@ -64,6 +64,11 @@
 <script>
 import moment from "moment";
 import Editor from "tui-editor";
+import extScrollSync from "tui-editor/dist/tui-editor-extScrollSync.js";
+import extTable from "tui-editor/dist/tui-editor-extTable.js";
+import Viewer from "tui-editor/dist/tui-editor-Viewer.js";
+import extColorSyntax from "tui-editor/dist/tui-editor-extColorSyntax.js";
+
 import store from "../store/note";
 
 import "codemirror/lib/codemirror.css";
