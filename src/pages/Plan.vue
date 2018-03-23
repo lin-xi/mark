@@ -56,9 +56,8 @@ import YearList from "../components/plan/YearList.vue";
 import store from "../store/plan";
 
 import "codemirror/lib/codemirror.css";
-import "./tui-editor.css"; // editor ui
-import "./tui-editor-contents.css"; // editor content
-// import "highlight.js/styles/github.css";
+import "../assets/tui-editor.css"; // editor ui
+import "../assets/tui-editor-contents.css"; // editor content
 
 export default {
   name: "index",

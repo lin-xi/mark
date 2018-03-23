@@ -17,7 +17,7 @@
         </div>
         <div class="about-dialog">
           <p class="logo"><img src="./logo.png"/></p>
-          <p class="version">1.1.0</p>
+          <p class="version">1.1.2</p>
           <p class="desc">Mark是一个完全免费的开源软件，致力于做好用的效率提升工具，欢迎你提出宝贵的的意见<br><br>
           如果喜欢，请给我的github项目点赞<br>
           如果觉得很棒，也可以捐赠共勉，谢谢</p>
@@ -80,6 +80,9 @@ export default {
           break;
         case "about":
           this.showAbout = true;
+          break;
+        case "togglelist":
+          eventHub.$emit("togglelist");
           break;
       }
     });

@@ -1,21 +1,25 @@
 <template>
   <div class="page-note">
     <div class="body-box">
-      <div class="list">
+      <div class="list" v-show="listShow">
         <div class="com-note-list">
           <div class="date-area">
             <span @click="queryAll">笔记</span>
-            <a @click="doAdd" class="add-icon"><i>+</i>分类</a>
+            <a @click="doAdd" class="add-icon"><img src="../assets/add.svg"/>分类</a>
+          </div>
+
+          <div class="add-area" v-if="showInput">
+            <input v-model="category" type="text" placeholder="添加分类" @keydown="doAddCategory($event)"/>
           </div>
 
           <div class="list-area">
             <div v-for="cat in categorys" :key="cat.id" v-if="categorys.length > 0">
               <div class="category" v-if="cat.id">
                 {{cat.name}}
-                <a @click="addNewNote(cat)" class="add-icon"><i>+</i></a>
+                <a @click="addNewNote(cat)" class="add-icon"><img src="../assets/add.svg"/></a>
               </div>
               <ul class="task-list">
-                <li v-for="task in cat.list" :key="task._id" @click="showContent(task)" :class="{done: task.status}">
+                <li v-for="task in cat.list" :key="task._id" @click="showContent(task)" :class="{done: task.status, active: task._id === id}">
                   {{task.subject || '草稿'}}
                 </li>
               </ul>
@@ -24,15 +28,17 @@
               请添加分类
             </div>
           </div>
-          <div class="add-area" v-if="showInput">
-            <input v-model="category" type="text" placeholder="添加分类" @keydown="doAddCategory($event)"/>
-          </div>
         </div>
       </div>
       <div class="detail">
         <div class="editor">
           <div class="cat-area">
-            分类：<div class="cat-label" @click="doShowSelect">{{this.categoryName}}</div>
+            <div class="scale" @click="doToggleList">
+              <img src="../assets/menu.svg"/>
+            </div>
+            <div>
+              分类：<span class="cat-label" @click="doShowSelect">{{this.categoryName}}</span>
+            </div>
             <div class="cat-select" v-show="showSelect">
               <div class="cat-select-item" v-for="cat in categorys" :key="'select-' + cat.id" @click="selectChange(cat)">
                 {{cat.name || '默认'}}
@@ -46,7 +52,8 @@
           <div ref="editor">
           </div>
           <div class="tool">
-            <span @click="doRemove">删除</span>
+            <span @click="doRemove"><img src="../assets/close.svg"/>删除</span>
+            <span @click="doExport"><img src="../assets/down.svg"/>导出pdf</span>
           </div>
         </div>
       </div>
@@ -57,13 +64,11 @@
 <script>
 import moment from "moment";
 import Editor from "tui-editor";
-
 import store from "../store/note";
 
 import "codemirror/lib/codemirror.css";
-import "tui-editor/dist/tui-editor.css"; // editor ui
-import "tui-editor/dist/tui-editor-contents.css"; // editor content
-import "highlight.js/styles/github.css";
+import "../assets/tui-editor.css"; // editor ui
+import "../assets/tui-editor-contents.css"; // editor content
 
 export default {
   name: "index",
@@ -79,7 +84,8 @@ export default {
       categoryName: "默认",
       categorys: [],
       content: "",
-      unsaved: false
+      unsaved: false,
+      listShow: true
     };
   },
   computed: {
@@ -89,6 +95,9 @@ export default {
     }
   },
   methods: {
+    doToggleList() {
+      this.listShow = !this.listShow;
+    },
     doRemove(id) {
       store
         .removeNote({
@@ -180,7 +189,8 @@ export default {
       this.id = "";
       this.categoryName = cat.name || "默认";
       this.editor.setValue("");
-    }
+    },
+    doExport() {}
   },
   mounted() {
     this.$nextTick(() => {
@@ -242,6 +252,10 @@ export default {
         this.unsaved = true;
       });
 
+      eventHub.$on("togglelist", () => {
+        this.doToggleList();
+      });
+
       window.addEventListener("resize", () => {
         if (this.editor.currentMode == "wysiwyg") {
           let nh = window.innerHeight - 170 + "px";
@@ -251,6 +265,9 @@ export default {
         }
       });
     });
+  },
+  unmouted() {
+    eventHub.$off("togglelist");
   }
 };
 </script>
@@ -329,6 +346,9 @@ export default {
               cursor: pointer;
               color: #666;
             }
+            li.active {
+              background-color: #e3ecf7;
+            }
           }
         }
       }
@@ -349,14 +369,22 @@ export default {
         }
 
         .cat-area {
-          padding: 10px;
+          padding: 6px 10px 10px 0;
           font-size: 16px;
           position: relative;
+          display: flex;
+          align-items: center;
+
+          .scale {
+            width: 24px;
+            margin-right: 10px;
+            font-size: 0px;
+            img {
+              width: 100%;
+            }
+          }
 
           .cat-label {
-            position: absolute;
-            left: 60px;
-            top: 8px;
             padding: 2px 10px;
             border-radius: 4px;
             background-color: lightgreen;
@@ -409,6 +437,11 @@ export default {
             cursor: pointer;
             text-align: center;
             background-color: #f7f8f9;
+            img {
+              width: 20px;
+              vertical-align: middle;
+              margin-right: 5px;
+            }
           }
           span:first-child {
             border-radius: 4px 0 0 4px;
@@ -444,16 +477,9 @@ export default {
     font-size: 14px;
     cursor: pointer;
 
-    i {
+    img {
       width: 20px;
       height: 20px;
-      text-align: center;
-      line-height: 18px;
-      border: 1px #ddd solid;
-      color: #ccc;
-      font-size: 20px;
-      border-radius: 100%;
-      font-style: normal;
       margin-right: 5px;
       cursor: pointer;
     }

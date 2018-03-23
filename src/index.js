@@ -195,6 +195,12 @@ function setMenu () {
       ]
     },
     {
+      label: '文件',
+      submenu: [
+        { label: '保存', accelerator: 'CmdOrCtrl+S', selector: 'save:' }
+      ]
+    },
+    {
       label: '编辑',
       submenu: [
         { label: '撤销', accelerator: 'CmdOrCtrl+Z', selector: 'undo:' },
@@ -231,16 +237,23 @@ function setMenu () {
       ]
     },
     {
+      label: '视图',
+      submenu: [
+        {
+          label: '显示／隐藏列表',
+          click () { sendMenuCommand('togglelist') }
+        }
+      ]
+    },
+    {
       label: '反馈',
       submenu: [
         {
           label: 'Bug反馈',
-          accelerator: 'Shift+Ctrl+B',
           click () { shell.openExternal('https://github.com/lin-xi/mark/issues') }
         },
         {
           label: '需求反馈',
-          accelerator: 'Shift+Ctrl+R',
           click () { shell.openExternal('https://github.com/lin-xi/mark/issues') }
         }
       ]
@@ -250,18 +263,15 @@ function setMenu () {
       submenu: [
         {
           label: '关于',
-          accelerator: 'Shift+Ctrl+A',
           click () { sendMenuCommand('about') }
         },
         {
           label: '源码',
-          accelerator: 'Shift+Ctrl+S',
           click () { shell.openExternal('https://github.com/lin-xi/mark') }
         },
         {type: 'separator'},
         {
           label: '捐赠',
-          accelerator: 'Shift+Ctrl+M',
           click () { shell.openExternal('https://github.com/lin-xi/mark') }
         }
       ]
