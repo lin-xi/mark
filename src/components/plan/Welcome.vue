@@ -18,11 +18,11 @@
 
 <script>
 import moment from 'moment'
-import { Checkbox } from "w-ui/lib/checkbox";
+import { Checkbox } from 'w-ui/lib/checkbox'
 import store from '../../store/store.js'
 
 export default {
-  name: "plan-welcome",
+  name: 'plan-welcome',
   components: {
     Checkbox
   },
@@ -32,18 +32,15 @@ export default {
       background: '',
       today: moment().format('D'),
       month: moment().format('M')
-    };
+    }
   },
   methods: {
     add() {
-      this.showInput = true;
+      this.showInput = true
     }
   },
   mounted() {
-
     this.$nextTick(() => {
-
-
       // store.request('http://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&nc=1519890908439&pid=hp').then(res => {
       //   if(res.result.images && res.result.images.length > 0){
       //     this.background = {
@@ -53,7 +50,7 @@ export default {
       //   }
       // })
 
-      let me = this;
+      let me = this
 
       let livePatern = {
         canvas: null,
@@ -64,80 +61,92 @@ export default {
         triangleColors: [],
         destColors: [],
 
-        init: function(){
-          this.canvas = document.getElementById('bg');
-          this.context = this.canvas.getContext('2d');
-          this.cols = Math.floor(me.$el.clientWidth / 24);
-          this.rows = Math.floor(me.$el.clientHeight / 24) + 1;
-          
-          this.canvas.width = me.$el.clientWidth;
-          this.canvas.height = me.$el.clientHeight;
-          
-          this.drawBackground();
-          this.animate();
-        },
-    
-        drawTriangle: function(x, y, color, inverted){
-          inverted = inverted == undefined ? false : inverted;
+        init: function() {
+          this.canvas = document.getElementById('bg')
+          this.context = this.canvas.getContext('2d')
+          this.cols = Math.floor(me.$el.clientWidth / 24)
+          this.rows = Math.floor(me.$el.clientHeight / 24) + 1
 
-          this.context.beginPath();
-          this.context.moveTo(x, y);
-          this.context.lineTo(inverted ? x - 22 : x + 22, y + 11);
-          this.context.lineTo(x, y + 22);
-          this.context.fillStyle = "rgb("+color+","+color+","+color+")";
-          this.context.fill();
-          this.context.closePath();
-        },
-    
-        getColor: function(){    
-          return this.colors[(Math.floor(Math.random() * 6))];
-        },
-    
-        drawBackground: function(){
-          var eq = null;
-          var x = this.cols;
-          var destY = 0;
-          var color, y;
-          
-          while(x--){
-            eq = x % 2;
-            y = this.rows;
+          this.canvas.width = me.$el.clientWidth
+          this.canvas.height = me.$el.clientHeight
 
-            while(y--){
-              destY = Math.round((y-0.5) * 24);
+          this.drawBackground()
+          this.animate()
+        },
 
-              this.drawTriangle(x * 24 + 2, eq == 1 ? destY : y * 24, this.getColor());
-              this.drawTriangle(x * 24, eq == 1 ? destY  : y * 24, this.getColor(), true);
+        drawTriangle: function(x, y, color, inverted) {
+          inverted = inverted == undefined ? false : inverted
+
+          this.context.beginPath()
+          this.context.moveTo(x, y)
+          this.context.lineTo(inverted ? x - 22 : x + 22, y + 11)
+          this.context.lineTo(x, y + 22)
+          this.context.fillStyle =
+            'rgb(' + color + ',' + color + ',' + color + ')'
+          this.context.fill()
+          this.context.closePath()
+        },
+
+        getColor: function() {
+          return this.colors[Math.floor(Math.random() * 6)]
+        },
+
+        drawBackground: function() {
+          var eq = null
+          var x = this.cols
+          var destY = 0
+          var color, y
+
+          while (x--) {
+            eq = x % 2
+            y = this.rows
+
+            while (y--) {
+              destY = Math.round((y - 0.5) * 24)
+
+              this.drawTriangle(
+                x * 24 + 2,
+                eq == 1 ? destY : y * 24,
+                this.getColor()
+              )
+              this.drawTriangle(
+                x * 24,
+                eq == 1 ? destY : y * 24,
+                this.getColor(),
+                true
+              )
             }
           }
         },
-    
-        animate: function(){
-          var me = this;
 
-          var x = Math.floor(Math.random() * this.cols);
-          var y = Math.floor(Math.random() * this.rows);
-          var eq = x % 2;
+        animate: function() {
+          var me = this
+
+          var x = Math.floor(Math.random() * this.cols)
+          var y = Math.floor(Math.random() * this.rows)
+          var eq = x % 2
 
           if (eq == 1) {
-            me.drawTriangle(x * 24, Math.round((y-0.5) * 24) , this.getColor(), true);
+            me.drawTriangle(
+              x * 24,
+              Math.round((y - 0.5) * 24),
+              this.getColor(),
+              true
+            )
           } else {
-            me.drawTriangle(x * 24 + 2, y * 24, this.getColor());
+            me.drawTriangle(x * 24 + 2, y * 24, this.getColor())
           }
 
-          setTimeout(function(){    
-            me.animate.call(me);
-          }, 20);
+          setTimeout(function() {
+            me.animate.call(me)
+          }, 20)
         }
       }
 
-      livePatern.init();
-    });
-
-    
+      livePatern.init()
+    })
   }
-
-};
+}
 </script>
 
 <style lang="less">
@@ -146,34 +155,34 @@ export default {
   height: 100%;
   border-left: 1px #e5e5e5 solid;
 
-  .wallpaper{
+  .wallpaper {
     width: 100%;
     height: 100%;
     background-size: cover;
     background-position: center center;
     // background-color: #666;
 
-    .date{
+    .date {
       position: absolute;
       left: 50%;
       top: 20px;
       color: #666;
-      background: rgba(255,255,255, 1);
+      background: rgba(255, 255, 255, 1);
       border-radius: 4px;
       text-align: center;
       padding: 5px 40px;
       transform: translate(-50%, 0);
       border: 1px #e0e0e0 solid;
-      p:first-child{
+      p:first-child {
         font-size: 30px;
         color: dodgerblue;
       }
-      p:last-child{
+      p:last-child {
         font-size: 60px;
       }
     }
 
-    .note{
+    .note {
       color: #fff;
       position: absolute;
       width: 80%;
@@ -184,8 +193,8 @@ export default {
       color: #888;
     }
 
-    .wallpaper-info{
-      background: rgba(255,255,255, 1);
+    .wallpaper-info {
+      background: rgba(255, 255, 255, 1);
       position: absolute;
       left: 50%;
       bottom: 20px;
@@ -193,7 +202,7 @@ export default {
       border-radius: 4px;
       padding: 5px 5px 0 5px;
       border: 1px #e0e0e0 solid;
-      img{
+      img {
         width: 32px;
         height: 32px;
       }

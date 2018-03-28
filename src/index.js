@@ -54,7 +54,7 @@ function createWindow () {
   const windowOptions = {
     width: 1200,
     minWidth: 800,
-    height: 600,
+    height: 700,
     title: app.getName(),
     backgroundColor: '#f0f0f0',
     titleBarStyle: 'hiddenInset'
@@ -64,8 +64,8 @@ function createWindow () {
 
   const debug = /--debug/.test(process.argv[2])
   if (debug) {
-    win.webContents.openDevTools()
-    win.maximize()
+    // win.webContents.openDevTools()
+    // win.maximize()
   }
 
   win.on('close', function (e) {

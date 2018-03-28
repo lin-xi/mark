@@ -46,48 +46,99 @@
 </template>
 
 <script>
-import IconText from "./components/IconText.vue";
-const { ipcRenderer, shell } = window.require("electron");
+import './assets/fonts/icomoon.eot'
+import './assets/fonts/icomoon.ttf'
+import './assets/fonts/icomoon.woff'
+import './assets/fonts/icomoon.svg'
+
+// import './assets/w-ui/themify.eot'
+// import './assets/w-ui/themify.woff'
+// import './assets/w-ui/themify.ttf'
+// import './assets/w-ui/themify.svg'
+
+import './assets/style.css'
+
+import IconText from './components/IconText.vue'
+const { ipcRenderer, shell } = window.require('electron')
 
 export default {
-  name: "app",
+  name: 'app',
   components: {
     IconText
   },
   data() {
     return {
       showAbout: false
-    };
+    }
   },
   methods: {
     doHideAbout() {
-      this.showAbout = false;
+      this.showAbout = false
     },
     doShowAbout() {
-      this.showAbout = true;
+      this.showAbout = true
     },
     jump(url) {
-      shell.openExternal(url);
+      shell.openExternal(url)
     }
   },
   mounted() {
-    document.documentElement.style.fontSize =
-      window.innerWidth * 50 / 750 + "px";
+    /* 设计图文档宽度 */
+    var docWidth = 750
 
-    ipcRenderer.on("menu-command", (event, command) => {
+    var doc = window.document,
+      docEl = doc.documentElement,
+      resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize'
+
+    var recalc = (function refreshRem() {
+      var clientWidth = docEl.getBoundingClientRect().width
+
+      /* 8.55：小于320px不再缩小，11.2：大于420px不再放大 */
+      docEl.style.fontSize =
+        Math.max(Math.min(20 * (clientWidth / docWidth), 12), 8.55) * 5 + 'px'
+
+      return refreshRem
+    })()
+
+    /* 添加倍屏标识，安卓为1 */
+    docEl.setAttribute(
+      'data-dpr',
+      window.navigator.appVersion.match(/iphone/gi)
+        ? window.devicePixelRatio
+        : 1
+    )
+
+    if (/iP(hone|od|ad)/.test(window.navigator.userAgent)) {
+      /* 添加IOS标识 */
+      doc.documentElement.classList.add('ios')
+      /* IOS8以上给html添加hairline样式，以便特殊处理 */
+      if (
+        parseInt(
+          window.navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/)[1],
+          10
+        ) >= 8
+      )
+        doc.documentElement.classList.add('hairline')
+    }
+
+    if (!doc.addEventListener) return
+    window.addEventListener(resizeEvt, recalc, false)
+    doc.addEventListener('DOMContentLoaded', recalc, false)
+
+    ipcRenderer.on('menu-command', (event, command) => {
       switch (command) {
-        case "setting":
-          break;
-        case "about":
-          this.showAbout = true;
-          break;
-        case "togglelist":
-          eventHub.$emit("togglelist");
-          break;
+        case 'setting':
+          break
+        case 'about':
+          this.showAbout = true
+          break
+        case 'togglelist':
+          eventHub.$emit('togglelist')
+          break
       }
-    });
+    })
   }
-};
+}
 </script>
 
 <style lang="less">
@@ -101,7 +152,7 @@ body {
   width: 100%;
   height: 100%;
   background-color: #fff;
-  font-family: arial, -apple-system, BlinkMacSystemFont, "Microsoft YaHei",
+  font-family: arial, -apple-system, BlinkMacSystemFont, 'Microsoft YaHei',
     sans-serif;
 }
 ul,
