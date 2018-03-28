@@ -1,9 +1,9 @@
 ![image](./pages/logo-small.png)
 
-![Github All Releases](https://img.shields.io/github/downloads/lin-xi/mark/total.svg)
-![GitHub issues](https://img.shields.io/github/issues/lin-xi/mark.svg)](https://github.com/lin-xi/mark/issues)
-![GitHub closed issues](https://img.shields.io/github/issues-closed/lin-xi/mark.svg)]
-![Gitter](https://img.shields.io/gitter/room/lin-xi/mark.svg)](https://github.com/lin-xi/mark)
+[![Github All Releases](https://img.shields.io/github/downloads/lin-xi/mark/total.svg)](https://github.com/lin-xi/mark/releases)
+![GitHub issues](https://img.shields.io/github/issues/lin-xi/mark.svg)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/lin-xi/mark.svg)
+![Gitter](https://img.shields.io/gitter/room/lin-xi/mark.svg)
 
 #  [Mark](https://lin-xi.github.io/mark/) 1.1.3
 
