@@ -34,7 +34,7 @@ tui.editor（TOAST UI Editor）是一款所见即所得的Markdown编辑器。TO
 
 # 下载安装
 
-[Mark 1.1.1](https://github.com/lin-xi/mark/releases/download/1.1.1/Mark-1.1.1.dmg.zip)
+[Mark 1.1.3](https://github.com/lin-xi/mark/releases/download/1.1.3/Mark-1.1.3.dmg.zip)
 
 
 [历史版本](https://github.com/lin-xi/mark/releases)
