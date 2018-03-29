@@ -61,7 +61,7 @@
     "uuid": "^3.2.1",
     "vue": "^2.5.13",
     "vue-router": "^3.0.1",
-    "w-ui": "^1.1.0"
+    "w-ui": "^1.1.1"
   },
   "eslintConfig": {
     "extends": [

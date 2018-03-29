@@ -12,7 +12,7 @@
             <a></a>
           </div>
 
-          <div class="add-area" v-if="showInput">
+          <div class="add-area" v-if="showInput" @click.stop="nullFunc">
             <input v-model="category" type="text" placeholder="添加分类" @keydown="doAddCategory($event)"/>
           </div>
 
@@ -51,6 +51,7 @@
               <ul class="tool-menu" v-if="showMenu">
                 <li @click="doRemove"><i class="icon-trash-2"></i>删除</li>
                 <li @click="doExport"><i class="icon-download"></i>导出pdf</li>
+                <li @click="doRemoveCategory"><i class="icon-download"></i>删除当前分类</li>
               </ul>
             </div>
           </div>
@@ -76,6 +77,7 @@ import extColorSyntax from 'tui-editor/dist/tui-editor-extColorSyntax.js'
 
 import { Accordion } from 'w-ui/lib/accordion'
 import { AccordionItem } from 'w-ui/lib/accordion-item'
+import { Alert, Confirm } from 'w-ui/lib/dialog'
 
 import store from '../store/note'
 
@@ -124,17 +126,21 @@ export default {
       this.listShow = !this.listShow
     },
     doRemove(id) {
-      store
-        .removeNote({
-          _id: this.id
-        })
-        .then(data => {
-          this.id = ''
-          ;(this.category = ''), (this.categoryName = '默认')
-          this.editor.setValue('')
-          this.unsaved = false
-          this.queryAll()
-        })
+      Confirm('您确定要删除当前笔记吗？', {
+        title: '您确认要删除吗？',
+        callback: val => {
+          if (val) {
+            store
+              .removeNote({
+                _id: this.id
+              })
+              .then(data => {
+                this.resetEditor()
+                this.queryAll()
+              })
+          }
+        }
+      })
     },
     doAdd() {
       this.showInput = !this.showInput
@@ -189,15 +195,21 @@ export default {
               createTime: Date.now()
             })
             .then(data => {
-              this.category = ''
-              this.showInput = false
               this.queryAll()
             })
         }
       }
     },
+    resetEditor() {
+      this.id = ''
+      this.category = ''
+      this.categoryName = '默认'
+      this.editor.setValue('')
+      this.unsaved = false
+    },
     showContent(note) {
       this.id = note._id
+      this.category = note.category
       this.categoryName = this.categoryMap[note.category] || '默认'
       this.editor.setValue(note.content)
     },
@@ -215,7 +227,32 @@ export default {
       this.categoryName = cat.name || '默认'
       this.editor.setValue('')
     },
-    doExport() {}
+    doExport() {},
+    doRemoveCategory() {
+      if (!this.category) {
+        Alert('默认分类不能删除')
+        return
+      }
+      Confirm(
+        '删除分类将同步删除分类下的所有笔记，您确定要删除当前分类下的所有笔记吗？',
+        {
+          title: '您确认要删除吗？',
+          callback: val => {
+            if (val) {
+              store
+                .removeCategory({
+                  id: this.category
+                })
+                .then(resolve => {
+                  this.resetEditor()
+                  this.queryAll()
+                })
+            }
+          }
+        }
+      )
+    },
+    nullFunc() {}
   },
   mounted() {
     this.$nextTick(() => {
@@ -247,7 +284,10 @@ export default {
           let subject = lines[0].replace(/[#*_~]/g, '')
           if (this.id) {
             store
-              .updateNote({ _id: this.id }, { subject: subject, content: val })
+              .updateNote(
+                { _id: this.id },
+                { subject: subject, content: val, category: this.category }
+              )
               .then(data => {
                 this.unsaved = false
                 this.queryAll()
@@ -334,7 +374,7 @@ export default {
           justify-content: space-between;
           border-bottom: 1px #f0f0f0 dashed;
           background-color: #f0f0f0;
-          padding: 10px;
+          padding: 10px 0 10px 10px;
           input {
             border: 1px #e0e0e0 solid;
             height: 30px;
@@ -439,7 +479,6 @@ export default {
               cursor: pointer;
             }
           }
-
           .more-menu {
             position: relative;
             i {
@@ -453,6 +492,7 @@ export default {
               z-index: 10;
               background: #fff;
               box-shadow: 0 0 10px #ccc;
+              color: #666;
 
               li {
                 padding: 10px;
