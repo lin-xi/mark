@@ -9,12 +9,9 @@ const {
   app,
   BrowserWindow,
   ipcMain,
-  ipcRenderer,
   Menu,
-  shell,
-  globalShortcut
+  shell
 } = require('electron')
-const autoUpdater = require('./auto-updater')
 const Service = require('./services/index.js').default
 const Data = require('./services/data.js').default
 let willQuitApp = false

@@ -13,7 +13,7 @@
           </div>
 
           <div class="add-area" v-if="showInput" @click.stop="nullFunc">
-            <input v-model="category" type="text" placeholder="添加分类" @keydown="doAddCategory($event)"/>
+            <input v-model="newCategory" type="text" placeholder="添加分类" @keydown="doAddCategory($event)"/>
           </div>
 
           <div class="list-area">
@@ -104,7 +104,8 @@ export default {
       categorys: [],
       content: '',
       unsaved: false,
-      listShow: true
+      listShow: true,
+      newCategory: ''
     }
   },
   computed: {
@@ -186,15 +187,17 @@ export default {
     },
     doAddCategory(e) {
       if (e.keyCode == 13) {
-        if (this.category !== '') {
+        if (this.newCategory !== '') {
           store
             .addCategory({
               table: 'category',
-              name: this.category,
+              name: this.newCategory,
               note: this.noteType,
               createTime: Date.now()
             })
             .then(data => {
+              this.newCategory = ''
+              this.showInput = false
               this.queryAll()
             })
         }
@@ -279,9 +282,12 @@ export default {
       })
       this.editor.eventManager.listen('blur', event => {
         let val = this.editor.getValue()
-        let lines = val.split(/\n/m)
+        let lines = val.trim().split(/\n/m)
         if (lines && lines.length > 0) {
           let subject = lines[0].replace(/[#*_~]/g, '')
+          if (subject.length > 20) {
+            subject = subject.substr(0, 20) + '...'
+          }
           if (this.id) {
             store
               .updateNote(
@@ -343,6 +349,10 @@ export default {
   height: 100%;
   font-size: 16px;
 
+  .te-md-container .CodeMirror {
+    font-size: 16px;
+  }
+
   i {
     font-size: 18px;
     margin-right: 5px;
@@ -375,6 +385,9 @@ export default {
           border-bottom: 1px #f0f0f0 dashed;
           background-color: #f0f0f0;
           padding: 10px 0 10px 10px;
+          user-select: none;
+          -webkit-app-region: drag;
+
           input {
             border: 1px #e0e0e0 solid;
             height: 30px;
@@ -455,6 +468,8 @@ export default {
           display: flex;
           align-items: center;
           justify-content: space-between;
+          user-select: none;
+          -webkit-app-region: drag;
 
           .cat-label {
             padding: 2px 10px;
