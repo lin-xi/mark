@@ -4,7 +4,6 @@ import AdmZip from 'adm-zip'
 import fs from 'fs'
 import path from 'path'
 const {
-  Tray,
   dialog,
   shell
 } = require('electron')
@@ -40,7 +39,6 @@ export default {
       message: '导入后，当前全部数据会被覆盖，你确定要覆盖相当数据吗？，',
       buttons: ['继续导入', '取消']
     }, (response, checkboxChecked) => {
-      console.log('response>>>:', response)
       if (response == 0) {
         dialog.showOpenDialog(global.win, {
           title: '请选择数据文件',

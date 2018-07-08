@@ -1,0 +1,37 @@
+.pop-select{
+  display: inline-block;
+  position: relative;
+
+  .select-value{
+    padding: 2px 10px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+  }
+  .pop-option{
+    position: absolute;
+    left: 0;
+    top: 30px;
+    width: 200px;
+    max-height: 300px;
+    overflow-x: hidden;
+    background-color: #fff;
+    box-shadow: 0 0 10px #ccc;
+    z-index: 999;
+    border-radius: 4px;
+
+    li{
+      padding: 10px;
+    }
+    li:hover{
+      background-color: #f5f5f5;
+      cursor: pointer;
+    }
+    li.active{
+      background-color: #f0f0f0;
+    }
+  }
+  .pop-option.right{
+    left: auto;
+    right: 0;
+  }
+}

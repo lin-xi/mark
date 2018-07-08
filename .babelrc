@@ -1,9 +1,16 @@
 {
   "presets": [
-    ["env", {
-      "targets": {
-        "node": "current"
+    [
+      "env",
+      {
+        "targets": {
+          "node": "current"
+        }
       }
-    }]
+    ]
+  ],
+  "plugins": [
+    "transform-vue-jsx",
+    "transform-object-rest-spread"
   ]
 }

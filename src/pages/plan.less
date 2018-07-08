@@ -1,0 +1,42 @@
+.page-plan {
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+
+  .body-box {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+
+    .wui-tab-nav-item {
+      line-height: 40px;
+      font-size: 16px;
+      background: #f5f6f7;
+      cursor: pointer;
+    }
+    .wui-tab-nav-item:not(:last-child):after {
+      border: none;
+    }
+    .wui-tab-nav .wui-tab-active {
+      background: #fff;
+      color: #666;
+    }
+    .wui-tab-nav .wui-tab-active:before {
+      width: 0;
+    }
+
+    .list{
+      flex: 0 0 400px;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: relative;
+      border-right: 1px #f0f0f0 solid;
+    }
+
+    .detail {
+      flex: 1;
+    }
+  }
+}

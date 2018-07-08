@@ -26,16 +26,16 @@
 </template>
 
 <script>
-import moment from "moment";
-import { Checkbox } from "w-ui/lib/checkbox";
-import { Timeline } from "w-ui/lib/timeline";
-import { TimelineItem } from "w-ui/lib/timeline-item";
+import moment from 'moment'
+import { Checkbox } from 'w-ui/lib/checkbox'
+import { Timeline } from 'w-ui/lib/timeline'
+import { TimelineItem } from 'w-ui/lib/timeline-item'
 
-import store from "../../store/plan";
-const SEASONS = ["春", "夏", "秋", "冬"];
+import store from '../../store'
+const SEASONS = ['春', '夏', '秋', '冬']
 
 export default {
-  name: "plan-season-list",
+  name: 'plan-season-list',
   components: {
     Checkbox,
     Timeline,
@@ -43,70 +43,70 @@ export default {
   },
   data() {
     return {
-      seasonText: SEASONS[moment().format("Q") - 1],
-      season: moment().format("Q"),
+      seasonText: SEASONS[moment().format('Q') - 1],
+      season: moment().format('Q'),
       categorys: []
-    };
+    }
   },
   methods: {
     queryAll() {
       let pc = store.queryAll(
         {
-          table: "category",
-          day: { $ne: "" },
-          week: { $ne: "" },
-          month: { $ne: "" },
+          table: 'category',
+          day: { $ne: '' },
+          week: { $ne: '' },
+          month: { $ne: '' },
           season: this.season
         },
         { createTime: 1 }
-      );
+      )
 
       let pt = store.queryAll(
         {
-          table: "task",
-          day: { $ne: "" },
-          week: { $ne: "" },
-          month: { $ne: "" },
+          table: 'task',
+          day: { $ne: '' },
+          week: { $ne: '' },
+          month: { $ne: '' },
           season: this.season
         },
         { createTime: -1 }
-      );
+      )
 
       Promise.all([pc, pt]).then(data => {
-        let cats = data[0];
-        let list = data[1];
+        let cats = data[0]
+        let list = data[1]
         cats.result.unshift({
-          _id: "",
-          name: ""
-        });
-        let lastDay = "";
-        this.categorys = [];
+          _id: '',
+          name: ''
+        })
+        let lastDay = ''
+        this.categorys = []
         for (let i = 0, len = list.result.length; i < len; i++) {
-          let item = list.result[i];
-          let dayItem;
+          let item = list.result[i]
+          let dayItem
           if (item.day === lastDay) {
-            continue;
+            continue
           } else {
-            lastDay = item.day;
+            lastDay = item.day
             dayItem = {
               day: item.day,
               list: []
-            };
-            this.categorys.push(dayItem);
+            }
+            this.categorys.push(dayItem)
           }
           for (let j = 0, len2 = cats.result.length; j < len2; j++) {
-            let cat = cats.result[j];
-            let ts = [];
+            let cat = cats.result[j]
+            let ts = []
             for (let k = 0, len3 = list.result.length; k < len3; k++) {
-              let task = list.result[k];
+              let task = list.result[k]
               if (task.day === item.day && task.category === cat._id) {
-                ts.push(task);
+                ts.push(task)
               }
             }
-            dayItem.list.push({ id: cat._id, name: cat.name, list: ts });
+            dayItem.list.push({ id: cat._id, name: cat.name, list: ts })
           }
         }
-      });
+      })
     },
     stateChange(task) {
       store
@@ -117,20 +117,20 @@ export default {
           { status: !task.status }
         )
         .then(data => {
-          eventHub.$emit("reload");
-        });
+          eventHub.$emit('reload')
+        })
     }
   },
   mounted() {
     this.$nextTick(() => {
-      this.queryAll();
-    });
+      this.queryAll()
+    })
 
-    eventHub.$on("reload", () => {
-      this.queryAll();
-    });
+    eventHub.$on('reload', () => {
+      this.queryAll()
+    })
   }
-};
+}
 </script>
 
 <style lang="less">

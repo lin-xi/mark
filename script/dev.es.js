@@ -6,7 +6,9 @@ import electron from 'electron'
 const option = {
   watch: true,
   // target: 'electron',
-  publicUrl: './'
+  publicUrl: './',
+  cache: true,
+  hmr: false
 }
 
 let index = new Parcel(path.join(__dirname, '../src/index.html'), option)

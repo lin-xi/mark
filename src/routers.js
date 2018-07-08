@@ -1,9 +1,10 @@
-import Vue from 'vue/dist/vue.esm.js'
+import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import Index from './pages/Index.vue'
 import Plan from './pages/Plan.vue'
+import NoteDesk from './pages/NoteDesk.vue'
 import Note from './pages/Note.vue'
 
 export default new VueRouter({
@@ -13,8 +14,9 @@ export default new VueRouter({
     // {name: 'Index', path: '/', component: Index},
     {name: 'Plan', path: '/plan', props: {name: "Index"}, component: Plan},
     {name: 'PlanDetail', path: '/plan/:name', props: true, component: Plan},
-    {name: 'Note', path: '/note', props: true, component: Note},
-    {name: 'NoteDetail', path: '/note/:name', props: true, component: Plan},
+    {name: 'NoteDesk', path: '/noteDesk', props: true, component: NoteDesk},
+    {name: 'Note', path: '/note/:bookId', props: true, component: Note},
+    {name: 'NoteDetail', path: '/noteDetail/:noteId', props: true, component: Plan},
     { path: '*', redirect: '/plan' }
   ],
 })

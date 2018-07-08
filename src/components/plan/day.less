@@ -1,0 +1,80 @@
+.day-page{
+
+  .list-area{
+    width: 100%;
+    padding: 10px;
+
+    .date-area {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding-bottom: 15px;
+    }
+    .add-area {
+      position: relative;
+      input {
+        border: 1px #e0e0e0 solid;
+        height: 40px;
+        width: 380px;
+        border-radius: 4px;
+        outline: none;
+        font-size: 14px;
+        text-indent: 10px;
+      }
+    }
+    .line{
+      border-bottom: 1px #e5e5e5 solid;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      color: #e5e5e5;
+      text-align: center;
+      padding-bottom: 5px;
+    }
+
+    .task-list {
+      li {
+        font-size: 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        .task-card{
+          display: inline-flex;
+          align-items: center;
+          background-color: #f0f0ff;
+          padding: 10px;
+          border-radius: 10px;
+        }
+        .task-time{
+          font-size: 12px;
+          color: #888;
+        }
+      }
+      
+    }
+    .task-list-done{
+      li {
+        font-size: 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        .task-card{
+          display: inline-flex;
+          align-items: center;
+          background-color: #f0f0ff;
+          padding: 10px;
+          border-radius: 10px;
+        }
+        .task-card.done {
+          background-color: lightgreen;
+          .wui-checkbox .wui-checkbox-text {
+            color: #aaa;
+          }
+        }
+        .task-time{
+          font-size: 12px;
+          color: #888;
+        }
+      }
+    }
+  }
+}

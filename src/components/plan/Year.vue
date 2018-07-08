@@ -34,82 +34,82 @@
 </template>
 
 <script>
-import moment from "moment";
-import { Checkbox } from "w-ui/lib/checkbox";
-import store from "../../store/plan";
+import moment from 'moment'
+import { Checkbox } from 'w-ui/lib/checkbox'
+import store from '../../store'
 
 export default {
-  name: "plan-week",
+  name: 'plan-week',
   components: {
     Checkbox
   },
   data() {
     return {
-      year: moment().format("YYYY"),
+      year: moment().format('YYYY'),
       showInput: false,
       showSelect: false,
-      category: "",
-      categoryName: "默认",
+      category: '',
+      categoryName: '默认',
       categorys: [],
-      task: "",
-      tasks: "",
-      content: ""
-    };
+      task: '',
+      tasks: '',
+      content: ''
+    }
   },
   methods: {
     doAdd() {
-      this.showInput = true;
+      this.showInput = true
     },
     queryAll() {
       let pc = store.queryAll(
         {
-          table: "category",
+          table: 'category',
           year: this.year
         },
         { createTime: 1 }
-      );
+      )
       let pt = store.queryAll(
         {
-          table: "task",
-          day: "",
-          week: "",
-          month: "",
-          season: "",
+          table: 'task',
+          day: '',
+          week: '',
+          month: '',
+          season: '',
           year: this.year
         },
         { createTime: 1 }
-      );
+      )
 
       Promise.all([pc, pt]).then(data => {
-        let cats = data[0];
-        let list = data[1];
+        let cats = data[0]
+        let list = data[1]
 
         cats.result.unshift({
-          _id: "",
-          name: ""
-        });
-        this.categorys = [];
+          _id: '',
+          name: ''
+        })
+        this.categorys = []
         cats.result.forEach(item => {
           let ts = list.result.filter(task => {
             if (task.category === item._id) {
-              return task;
+              return task
             }
-          });
-          this.categorys.push({ id: item._id, name: item.name, list: ts });
-        });
-      });
+          })
+          this.categorys.push({ id: item._id, name: item.name, list: ts })
+        })
+      })
     },
     doAddTask(e) {
       if (e.keyCode == 13) {
-        if (this.task !== "") {
+        if (this.task !== '') {
           store
             .addTask({
-              table: "task",
-              day: "",
-              week: "",
+              table: 'task',
+              day: '',
+              week: '',
               category: this.category,
-              month: "",
-              season: "",
+              month: '',
+              season: '',
               year: this.year,
               subject: this.task,
               content: this.content,
@@ -117,41 +117,41 @@ export default {
               status: 0
             })
             .then(data => {
-              this.task = "";
-              this.queryAll();
-            });
+              this.task = ''
+              this.queryAll()
+            })
         }
       }
     },
     doAddCategory(e) {
       if (e.keyCode == 13) {
-        if (this.category !== "") {
+        if (this.category !== '') {
           store
             .addCategory({
-              table: "category",
+              table: 'category',
               name: this.category,
               year: this.year,
               createTime: Date.now()
             })
             .then(data => {
-              this.showInput = false;
-              this.category = "";
-              this.queryAll();
-            });
+              this.showInput = false
+              this.category = ''
+              this.queryAll()
+            })
         }
       }
     },
     showContent(task) {
-      this.$emit("showContent", task);
+      this.$emit('showContent', task)
     },
     doShowSelect() {
-      this.showSelect = !this.showSelect;
+      this.showSelect = !this.showSelect
     },
     selectChange(cat) {
-      this.category = cat.id;
-      this.categoryName = cat.name || "默认";
-      this.showSelect = false;
-      this.$refs.task.focus();
+      this.category = cat.id
+      this.categoryName = cat.name || '默认'
+      this.showSelect = false
+      this.$refs.task.focus()
     },
     stateChange(task) {
       store
@@ -162,22 +162,22 @@ export default {
           { status: !task.status }
         )
         .then(data => {
-          eventHub.$emit("reload");
-        });
+          eventHub.$emit('reload')
+        })
     }
   },
   mounted() {
     this.$nextTick(() => {
-      this.queryAll();
-    });
+      this.queryAll()
+    })
 
-    eventHub.$on("reload", () => {
-      this.queryAll();
-    });
+    eventHub.$on('reload', () => {
+      this.queryAll()
+    })
 
-    this.$el.style.height = window.innerHeight - 40 + "px";
+    this.$el.style.height = window.innerHeight - 40 + 'px'
   }
-};
+}
 </script>
 
 <style lang="less">

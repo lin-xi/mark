@@ -5,7 +5,7 @@
 ![GitHub closed issues](https://img.shields.io/github/issues-closed/lin-xi/mark.svg)
 ![Gitter](https://img.shields.io/gitter/room/lin-xi/mark.svg)
 
-#  [Mark](https://lin-xi.github.io/mark/) 1.1.3
+#  [Mark](https://lin-xi.github.io/mark/) 2.0.0
 
 https://lin-xi.github.io/mark/
 

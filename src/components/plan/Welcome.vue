@@ -19,7 +19,7 @@
 <script>
 import moment from 'moment'
 import { Checkbox } from 'w-ui/lib/checkbox'
-import store from '../../store/store.js'
+import store from '../../store'
 
 export default {
   name: 'plan-welcome',

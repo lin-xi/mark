@@ -5,7 +5,7 @@
         <img src="./logo.svg" @click="doShowAbout"/>
         <ul class="menu">
           <li><a href="#/plan"><IconText text="计划" color="#2a72c0"></IconText></a></li>
-          <li><a href="#/note"><IconText text="笔记" color="rgb(211, 93, 62)"></IconText></a></li>
+          <li><a href="#/noteDesk"><IconText text="笔记" color="rgb(211, 93, 62)"></IconText></a></li>
         </ul>
       </div>
       <div class="content-area">
@@ -17,7 +17,7 @@
         </div>
         <div class="about-dialog">
           <p class="logo"><img src="./logo.png"/></p>
-          <p class="version">1.1.3</p>
+          <p class="version">2.0.1</p>
           <p class="desc">Mark是一个完全免费的开源软件，致力于做好用的效率提升工具，欢迎你提出宝贵的的意见<br><br>
           如果喜欢，请给我的github项目点赞<br>
           如果觉得很棒，也可以捐赠共勉，谢谢</p>
@@ -92,7 +92,7 @@ export default {
 
       /* 8.55：小于320px不再缩小，11.2：大于420px不再放大 */
       docEl.style.fontSize =
-        Math.max(Math.min(20 * (clientWidth / docWidth), 12), 8.55) * 5 + 'px'
+        Math.max(Math.min(20 * (clientWidth / docWidth), 12), 8.55) * 3 + 'px'
 
       return refreshRem
     })()

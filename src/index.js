@@ -12,8 +12,9 @@ const {
   Menu,
   shell
 } = require('electron')
-const Service = require('./services/index.js').default
+const Service = require('./services')
 const Data = require('./services/data.js').default
+const DBS = ['plan.db', 'note.db', 'note_book.db', 'note_category.db']
 let willQuitApp = false
 
 /**
@@ -53,7 +54,6 @@ function createWindow () {
     minWidth: 800,
     height: 700,
     title: app.getName(),
-    backgroundColor: '#f0f0f0',
     titleBarStyle: 'hiddenInset'
   }
   let win = new BrowserWindow(windowOptions)
@@ -100,7 +100,10 @@ function makeSingleInstance () {
  */
 function globalConfig () {
   // 数据目录初始化
-  let ppath = path.join(app.getPath('userData'), 'mark')
+  let ppath = path.join(__dirname, '../data')
+  if (process.env.NODE_ENV === 'production') {
+    ppath = path.join(app.getPath('userData'), 'mark')
+  }
   if (!fse.ensureDirSync(ppath)) {
     fse.mkdirsSync(ppath)
   }
@@ -109,13 +112,13 @@ function globalConfig () {
   logger.setLevel('info')
 
   // db文件初始化
-  let planPath = path.join(ppath, 'plan.db')
-  let notePath = path.join(ppath, 'note.db')
-  if (!fse.pathExistsSync(planPath)) {
-    fse.outputFileSync(planPath, '', 'utf8')
-    fse.outputFileSync(notePath, '', 'utf8')
-    logger.info('create db files sucess')
-  }
+  DBS.forEach(item => {
+    let dbPath = path.join(ppath, item)
+    if (!fse.pathExistsSync(dbPath)) {
+      fse.outputFileSync(dbPath, '', 'utf8')
+      logger.info('create db files sucess')
+    }
+  })
   global.dataPath = ppath
   global.logger = logger
   global.app = app
@@ -147,7 +150,6 @@ function initIPC () {
     let uuid = args[0]
     let url = args[1]
     let params = args[2]
-
     fetch(url, params).then(res => {
       return res.json()
     }).then((json) => {
@@ -166,14 +168,8 @@ function initIPC () {
  */
 function initDBInstance () {
   global.daos = {}
-  return Promise.all([
-    Service.getDB('plan').then(dao => {
-      global.daos.plan = dao
-    }),
-    Service.getDB('note').then(dao => {
-      global.daos.note = dao
-    })
-  ])
+  global.daos['note'] = Service.Note
+  global.daos['plan'] = Service.Plan
 }
 
 /**
@@ -234,15 +230,6 @@ function setMenu () {
       ]
     },
     {
-      label: '视图',
-      submenu: [
-        {
-          label: '显示／隐藏列表',
-          click () { sendMenuCommand('togglelist') }
-        }
-      ]
-    },
-    {
       label: '反馈',
       submenu: [
         {
@@ -292,12 +279,11 @@ function appReady () {
   // 初始化全局配置
   globalConfig()
   // 初始化DB实例
-  initDBInstance().then(() => {
-    // 初始化进程通信管道
-    initIPC()
-    // 创建窗口
-    createWindow()
-    setMenu()
-  })
+  initDBInstance()
+  // 初始化进程通信管道
+  initIPC()
+  // 创建窗口
+  createWindow()
+  setMenu()
 }
 initialize()

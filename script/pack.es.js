@@ -1,19 +1,18 @@
 import Parcel from 'parcel-bundler'
 import path from 'path'
-import electron from 'electron'
 import fs from 'fs-extra'
-const builder = require("electron-builder")
+const builder = require('electron-builder')
 
 const option = {
   watch: false,
   cache: false,
   // target: 'electron',
-  publicUrl: './'
+  publicUrl: './',
+  hmr: false
 }
 
 let index = new Parcel(path.join(__dirname, '../src/index.html'), option)
 index.bundle().then(() => {
-
   fs.copySync(path.join(__dirname, '../logo.png'), path.join(__dirname, '../dist/logo.png'))
   fs.copySync(path.join(__dirname, '../logo.svg'), path.join(__dirname, '../dist/logo.svg'))
   fs.copySync(path.join(__dirname, '../src/index.js'), path.join(__dirname, '../dist/index.js'))
@@ -26,28 +25,25 @@ index.bundle().then(() => {
 
   builder.build({
     config: {
-      "appId": "com.mark.app",
-      "productName": "Mark",
-      "directories": {
-        "output": path.join(__dirname, '../pack')
+      'appId': 'com.mark.app',
+      'productName': 'Mark',
+      'directories': {
+        'output': path.join(__dirname, '../pack')
       },
-      "mac": {
-        "target": [
+      'mac': {
+        'target': [
           {
-            "target": "dmg"
+            'target': 'dmg'
           }
         ],
-        "icon": path.join(__dirname, '../dist/logo.png'),
+        'icon': path.join(__dirname, '../dist/logo.png')
       }
     }
   }).then(() => {
     console.log('>> success packed')
     process.exit()
   })
-  .catch((error) => {
-    console.error(error)
-  })
-  
-
+    .catch((error) => {
+      console.error(error)
+    })
 })
-
