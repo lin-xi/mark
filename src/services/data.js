@@ -19,6 +19,8 @@ export default {
         let zip = new AdmZip()
         zip.addLocalFile(global.dataPath + '/plan.db')
         zip.addLocalFile(global.dataPath + '/note.db')
+        zip.addLocalFile(global.dataPath + '/note_book.db')
+        zip.addLocalFile(global.dataPath + '/note_category.db')
         zip.writeZip(filename)
 
         shell.openItem(path.dirname(filename))
