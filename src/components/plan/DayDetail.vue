@@ -3,6 +3,7 @@
     <div class="form">
       <div class="title">
         {{task.subject}}
+        <a @click.stop="doRemoveTask(task)"><i class="icon-trash"></i></a>
       </div>
       <div class="date">{{dateTime}}</div>
       <div class="tag-area">
@@ -47,11 +48,8 @@ export default {
     updateTask(id, newTask) {
       return store.execute('plan', 'updatePlan', { _id: id }, newTask)
     },
-    removeTask(title) {
-      return store.execute('plan', 'removePlan', {
-        subject: title,
-        createTime: Date.now()
-      })
+    removeTask(id) {
+      return store.execute('plan', 'removePlan', {_id: id})
     },
     doAddTag(e) {
       if (e.keyCode == 13) {
@@ -76,6 +74,12 @@ export default {
       this.updateTask(this.task._id, {
         content: this.task.content,
         updateTime: Date.now()
+      })
+    },
+    doRemoveTask(task) {
+      this.removeTask(task._id).then(() => {
+        console.log('remove success', task._id)
+        this.$eventHub.$emit('task-delete')
       })
     }
   },

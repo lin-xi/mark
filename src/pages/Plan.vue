@@ -50,9 +50,12 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(() => {
-      let h = window.innerHeight - 110
+    this.$eventHub.$on('task-delete', ()=> {
+      this.compo = Welcome
     })
+  },
+  unmount() {
+    this.$eventHub.$off('task-delete')
   }
 }
 </script>

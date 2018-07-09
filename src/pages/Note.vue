@@ -112,7 +112,7 @@ export default {
       showMenu: false,
       noteId: '',
       notes: [],
-      saveStatus: false,
+      saveStatus: '',
       unsaved: false
     }
   },
@@ -173,7 +173,7 @@ export default {
       }
     },
     updateNote(noteId, title, content, bookId, categoryId) {
-      if (noteId && bookId && categoryId) {
+      if (noteId && bookId) {
         return store.execute(
           'note',
           'updateNote',
@@ -197,6 +197,7 @@ export default {
       this.categoryId = cat._id
       this.categoryName = cat.name
       this.noteId = ''
+      this.saveStatus = '新增成功'
       this.editor.setValue('')
     },
     editCategory(cat) {
@@ -310,6 +311,7 @@ export default {
                 this.categoryId
               ).then(() => {
                 this.unsaved = false
+                this.saveStatus = '更新成功'
                 this.queryAll()
               })
             } else {
@@ -317,6 +319,7 @@ export default {
                 data => {
                   this.noteId = data.result._id
                   this.unsaved = false
+                  this.saveStatus = '新增成功'
                   this.queryAll()
                 }
               )

@@ -4,6 +4,7 @@ let cache = {}
 let callbacks = []
 
 let getDB = (name) => {
+  // let ppath = path.join(__dirname, '../../data/' + name + '.db')
   let ppath = path.join(global.app.getPath('userData'), 'mark', name + '.db')
   // if (process.env.NODE_ENV === 'production') {
   //   ppath = path.join(global.app.getPath('userData'), 'mark', name + '.db')

@@ -51,11 +51,16 @@ tui.editor（TOAST UI Editor）是一款所见即所得的Markdown编辑器。TO
 
 ![image](./pages/screen-shot.png)
 ![image](./pages/screen-shot2.png)
+![image](./pages/screen-shot3.png)
 
 
 Mark致力于做好用的效率提升工具，欢迎交流并提出宝贵意见
 
 # 发布日志  Release Log
+
+## 2.0.0
+- [x] 【功能】新增笔记本管理
+- [x] 【功能】简化todo
 
 ## 1.1.3
 - [x] 【功能】修改note页面分类默认折叠

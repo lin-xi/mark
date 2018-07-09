@@ -153,7 +153,6 @@ export default {
 .com-plan-welcome {
   position: relative;
   height: 100%;
-  border-left: 1px #e5e5e5 solid;
 
   .wallpaper {
     width: 100%;

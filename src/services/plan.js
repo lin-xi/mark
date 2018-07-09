@@ -39,7 +39,7 @@ export default {
   },
 
   removePlan (doc) {
-    return DBUtil.getDB('note').then(db => {
+    return DBUtil.getDB('plan').then(db => {
       return DBUtil.remove(db, doc)
     })
   }

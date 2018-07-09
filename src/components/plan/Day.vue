@@ -85,14 +85,14 @@ export default {
         if (!data.errNo) {
           this.plans = data.result
         }
-      })
-      store
-        .execute('plan', 'queryPlan', { status: 1 }, { updateTime: -1 })
+
+        store.execute('plan', 'queryPlan', { status: 1 }, { updateTime: -1 })
         .then(data => {
           if (!data.errNo) {
             this.dones = data.result
           }
         })
+      })
     },
     addTask(title) {
       return store.execute('plan', 'addPlan', {
@@ -139,12 +139,20 @@ export default {
       )
     },
     computedTime(task) {
-      return moment(task.createTime).fromNow()
+      let str = moment(task.createTime).fromNow()
+      if(str === '刚刚之前') {
+        str = '刚刚'
+      }
+      return str
     }
   },
   mounted() {
     this.queryAll()
     this.$el.style.height = window.innerHeight - 40 + 'px'
+
+    this.$eventHub.$on('task-delete', ()=> {
+      this.queryAll()
+    })
   }
 }
 </script>
