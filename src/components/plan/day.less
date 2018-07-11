@@ -15,7 +15,7 @@
       input {
         border: 1px #e0e0e0 solid;
         height: 40px;
-        width: 380px;
+        width: 480px;
         border-radius: 4px;
         outline: none;
         font-size: 14px;
@@ -52,27 +52,46 @@
       
     }
     .task-list-done{
-      li {
-        font-size: 20px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        cursor: pointer;
-        .task-card{
-          display: inline-flex;
-          align-items: center;
-          background-color: #f0f0ff;
-          padding: 10px;
-          border-radius: 10px;
-        }
-        .task-card.done {
-          background-color: lightgreen;
-          .wui-checkbox .wui-checkbox-text {
-            color: #aaa;
-          }
-        }
-        .task-time{
-          font-size: 12px;
+      .day-item{
+        margin-bottom: 30px;
+        .day-text{
           color: #888;
+          position: relative;
+          padding-left: 20px;
+        }
+        .day-text::before{
+          content: "";
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          left: 0;
+          top: 50%;
+          margin-top: -5px;
+          border-radius: 100%;
+          background-color: coral;
+        }
+        li {
+          font-size: 20px;
+          margin-top: 10px;
+          margin-bottom: 10px;
+          cursor: pointer;
+          .task-card{
+            display: inline-flex;
+            align-items: center;
+            background-color: #f0f0ff;
+            padding: 10px;
+            border-radius: 10px;
+          }
+          .task-card.done {
+            background-color: lightgreen;
+            .wui-checkbox .wui-checkbox-text {
+              color: #aaa;
+            }
+          }
+          .task-time{
+            font-size: 12px;
+            color: #888;
+          }
         }
       }
     }

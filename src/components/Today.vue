@@ -7,20 +7,14 @@
 
 <script>
 import moment from 'moment'
-const WEEK_DAY = {
-  'Monday': '星期一',
-  'Tuesday': '星期二',
-  'Wednesday': '星期三',
-  'Thursday': '星期四',
-  'Friday': '星期五',
-  'Saturday': '星期六',
-  'Sunday': '星期天'
-}
+moment.locale('en', {
+  weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+})
 export default {
   name: 'today',
   data () {
     return {
-      weekDay: WEEK_DAY[moment().format('dddd')],
+      weekDay: moment().format('dddd'),
       date: moment().format('D')
     }
   },

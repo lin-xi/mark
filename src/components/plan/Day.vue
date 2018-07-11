@@ -2,7 +2,7 @@
   <div class="day-page">
     <div class="list-area">
       <div class="date-area">
-        <Today @click.native="queryAll"></Today>
+        <Today></Today>
       </div>
       <div class="add-area">
         <input ref="task" v-model="task" @keydown="doAddTask($event)" type="text" placeholder="添加任务"/>
@@ -18,14 +18,17 @@
       </ul>
       <div class="line" v-if="dones.length > 0">已完成</div>
       <ul class="task-list-done">
-        <template v-for="task in dones">
-          <li :key="task._id" @click="showContent(task)">
-            <span :class="{'task-card': true, done: task.status}">
-              <Checkbox v-model="task.status" @change="stateChange(task)">{{task.subject}}</Checkbox>
-              <Tags :tags="task.tags || []"></Tags>
-            </span>
-            <span class="task-time">{{computedTime(task)}}</span>
-          </li>
+        <template v-for='day in dones'>
+          <div class="day-item" :key="day.day">
+            <div class="day-text">{{day.day}}</div>
+            <li v-for="task in day.items" :key="task._id" @click='showContent(task)'>
+              <span :class="{'task-card': true, done: task.status}">
+                <Checkbox v-model="task.status" @change="stateChange(task)">{{task.subject}}</Checkbox>
+                <Tags :tags="task.tags || []"></Tags>
+              </span>
+              <span class="task-time">{{computedTime(task)}}</span>
+            </li>
+          </div>
         </template>
       </ul>
     </div>
@@ -44,6 +47,7 @@ import './day.less'
 import { setTimeout } from 'timers'
 
 moment.locale('en', {
+  weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
   relativeTime: {
     future: '%s之后',
     past: '%s之前',
@@ -85,13 +89,24 @@ export default {
         if (!data.errNo) {
           this.plans = data.result
         }
-
-        store.execute('plan', 'queryPlan', { status: 1 }, { updateTime: -1 })
-        .then(data => {
-          if (!data.errNo) {
-            this.dones = data.result
-          }
-        })
+        store
+          .execute('plan', 'queryPlan', { status: 1 }, { updateTime: -1 })
+          .then(data => {
+            if (!data.errNo) {
+              let days = []
+              let lastDay = ''
+              data.result.map(item => {
+                let day = moment(item.createTime).format('YYYY-MM-DD dddd')
+                if (day !== lastDay) {
+                  days.push({ day, items: [item] })
+                  lastDay = day
+                } else {
+                  days[days.length - 1].items.push(item)
+                }
+              })
+              this.dones = days
+            }
+          })
       })
     },
     addTask(title) {
@@ -140,7 +155,7 @@ export default {
     },
     computedTime(task) {
       let str = moment(task.createTime).fromNow()
-      if(str === '刚刚之前') {
+      if (str === '刚刚之前') {
         str = '刚刚'
       }
       return str
@@ -150,7 +165,7 @@ export default {
     this.queryAll()
     this.$el.style.height = window.innerHeight - 40 + 'px'
 
-    this.$eventHub.$on('task-delete', ()=> {
+    this.$eventHub.$on('task-delete', () => {
       this.queryAll()
     })
   }
