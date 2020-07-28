@@ -21,8 +21,13 @@ let willQuitApp = false
  * 初始化
  */
 function initialize () {
-  const shouldQuit = makeSingleInstance()
-  if (shouldQuit) return app.quit()
+  app.requestSingleInstanceLock()
+  app.on('second-instance', (event, argv, cwd) => {
+    if (global.win) {
+      if (global.win.isMinimized()) { global.win.restore() }
+      global.win.focus()
+    }
+  })
 
   app.on('ready', () => {
     appReady()
@@ -54,7 +59,10 @@ function createWindow () {
     minWidth: 800,
     height: 700,
     title: app.getName(),
-    titleBarStyle: 'hiddenInset'
+    titleBarStyle: 'hiddenInset',
+    webPreferences: {
+      nodeIntegration: true
+    }
   }
   let win = new BrowserWindow(windowOptions)
   win.loadURL(path.join('file://', __dirname, '../dist/index.html'))
@@ -75,24 +83,6 @@ function createWindow () {
   })
 
   global.win = win
-}
-
-// Make this app a single instance app.
-//
-// The main window will be restored and focused instead of a second window
-// opened when a person attempts to launch a second instance.
-//
-// Returns true if the current version of the app should quit instead of
-// launching.
-function makeSingleInstance () {
-  if (process.mas) return false
-
-  return app.makeSingleInstance(function () {
-    if (global.win) {
-      if (global.win.isMinimized()) { global.win.restore() }
-      global.win.focus()
-    }
-  })
 }
 
 /**
