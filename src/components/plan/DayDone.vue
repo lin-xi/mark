@@ -1,34 +1,6 @@
 <template>
   <div class="day-page">
     <div class="list-area">
-      <div class="date-area">
-        <Today></Today>
-      </div>
-      <div class="add-area">
-        <input
-          ref="task"
-          v-model="task"
-          @keydown="doAddTask($event)"
-          type="text"
-          placeholder="添加任务"
-        />
-      </div>
-      <div class="task-list">
-        <div class="task-line" v-for="task in plans" :key="task._id">
-          <div class="task" @click="showContent(task)">
-            <span class="task-card">
-              <Checkbox v-model="task.status" @change="stateChange(task)">
-                {{
-                task.subject
-                }}
-              </Checkbox>
-              <Tags :tags="task.tags || []"></Tags>
-            </span>
-            <span class="task-time">{{ computedTime(task) }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="line">已完成</div>
       <ul class="task-list-done">
         <template v-for="day in dones">
           <div class="day-item" :key="day.day">
@@ -110,20 +82,12 @@ export default {
   computed: {},
   methods: {
     queryAll() {
-      store.execute('plan', 'queryPlan', { status: 0 }).then(data => {
-        if (!data.errNo) {
-          this.plans = data.result
-        }
-      })
       store
         .execute(
           'plan',
           'queryPlan',
           {
-            status: 1,
-            createTime: {
-              $gt: moment(moment().format('YYYYMMDD 00:00:00')).millisecond()
-            }
+            status: 1
           },
           { updateTime: -1 }
         )
@@ -144,15 +108,6 @@ export default {
           }
         })
     },
-    addTask(title) {
-      return store.execute('plan', 'addPlan', {
-        subject: title,
-        content: '',
-        status: 0,
-        tags: [],
-        createTime: Date.now()
-      })
-    },
     updateTask(id, newTask) {
       return store.execute('plan', 'updatePlan', { _id: id }, newTask)
     },
@@ -161,21 +116,6 @@ export default {
         subject: title,
         createTime: Date.now()
       })
-    },
-    doAdd() {
-      this.showInput = !this.showInput
-    },
-    doAddTask(e) {
-      if (e.keyCode == 13) {
-        if (this.task !== '') {
-          this.addTask(this.task).then(data => {
-            if (!data.errNo) {
-              this.task = ''
-              this.queryAll()
-            }
-          })
-        }
-      }
     },
     showContent(task) {
       this.$emit('showContent', task)

@@ -30,7 +30,7 @@
  */
 import DBUtil from './dbUtil'
 export default {
-  queryNote (doc, sort = {createTime: 1}) {
+  queryNote (doc, sort = {createTime: -1}) {
     return new Promise(resolve => {
       DBUtil.getDB('note').then(db => {
         db.find(doc).sort(sort).exec((err, result) => {

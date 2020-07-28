@@ -129,6 +129,7 @@ export default {
             if (result) {
               this.editMode = !this.editMode
               this.removeBook(book._id).then(data => {
+                this.editMode = false
                 this.queryAll()
               })
             }

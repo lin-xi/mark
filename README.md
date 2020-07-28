@@ -5,7 +5,7 @@
 ![GitHub closed issues](https://img.shields.io/github/issues-closed/lin-xi/mark.svg)
 ![Gitter](https://img.shields.io/gitter/room/lin-xi/mark.svg)
 
-#  [Mark](https://lin-xi.github.io/mark/) 2.0.0
+#  [Mark](https://lin-xi.github.io/mark/) 2.0.1
 
 https://lin-xi.github.io/mark/
 
@@ -34,7 +34,7 @@ tui.editor（TOAST UI Editor）是一款所见即所得的Markdown编辑器。TO
 
 # 下载安装
 
-[Mark 1.1.3](https://github.com/lin-xi/mark/releases/download/1.1.3/Mark-1.1.3.dmg.zip)
+[Mark 2.0.1](https://github.com/lin-xi/mark/releases/download/1.1.3/Mark-1.1.3.dmg.zip)
 
 
 [历史版本](https://github.com/lin-xi/mark/releases)

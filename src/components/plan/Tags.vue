@@ -50,10 +50,10 @@ export default {
     border-radius: 4px;
     margin-right: 5px;
     font-size: 12px;
-    background-color: #fff;
+    background-color: #f96;
     border: 1px #eee solid;
     padding: 4px;
-    color: #888;
+    color: #fff;
   }
 }
 </style>

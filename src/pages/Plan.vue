@@ -6,7 +6,8 @@
           <TabPanel title="计划">
             <PlanDay @showContent="showContent"></PlanDay>
           </TabPanel>
-          <TabPanel title="统计">
+          <TabPanel title="完成">
+            <PlanDayDone @showContent="showContent"></PlanDayDone>
           </TabPanel>
         </Tab>
       </div>
@@ -21,6 +22,7 @@
 import { Tab } from 'w-ui/lib/tab'
 import { TabPanel } from 'w-ui/lib/tab-panel'
 import PlanDay from '../components/plan/Day.vue'
+import PlanDayDone from '../components/plan/DayDone.vue'
 import PlanMonth from '../components/plan/Month.vue'
 import Welcome from '../components/plan/Welcome.vue'
 import DayDetail from '../components/plan/DayDetail.vue'
@@ -39,6 +41,7 @@ export default {
     Tab,
     TabPanel,
     PlanDay,
+    PlanDayDone,
     PlanMonth,
     Welcome,
     DayDetail
@@ -50,7 +53,7 @@ export default {
     }
   },
   mounted() {
-    this.$eventHub.$on('task-delete', ()=> {
+    this.$eventHub.$on('task-delete', () => {
       this.compo = Welcome
     })
   },

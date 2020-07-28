@@ -1,11 +1,11 @@
 {
   "name": "mark",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "mark is a markdown editor for mac",
   "main": "src/index.js",
   "scripts": {
     "start": "parcel watch src/index.html",
-    "build": "parcel build src/index.html --public-url ./ --target electron --no-cache",
+    "build": "NODE_ENV=production parcel build src/index.html --public-url ./ --target electron --no-cache",
     "dev": "rimraf ./dist && node script/dev.js",
     "electron": "electron . --debug",
     "pack": "rimraf ./dist && rimraf ./pack && node script/pack.js",
@@ -33,8 +33,6 @@
     "babel-cli": "^6.26.0",
     "css-loader": "^0.28.10",
     "devtron": "^1.4.0",
-    "electron": "^1.8.2",
-    "electron-builder": "^20.2.0",
     "electron-packager": "^12.1.0",
     "eslint": "^4.19.1",
     "eslint-plugin-prettier": "^2.6.0",
@@ -47,6 +45,12 @@
     "vue-template-compiler": "^2.5.13"
   },
   "dependencies": {
+    "@toast-ui/editor": "^2.3.1-alpha",
+    "@toast-ui/editor-plugin-chart": "^1.0.0",
+    "@toast-ui/editor-plugin-code-syntax-highlight": "^1.0.0",
+    "@toast-ui/editor-plugin-color-syntax": "^1.0.1",
+    "@toast-ui/editor-plugin-table-merged-cell": "^1.1.1",
+    "@toast-ui/editor-plugin-uml": "^1.0.0",
     "adm-zip": "^0.4.7",
     "babel-core": "^6.26.0",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
@@ -64,11 +68,12 @@
     "moment": "^2.20.1",
     "nedb": "^1.8.0",
     "node-fetch": "^2.0.0",
-    "tui-editor": "^1.0.2",
+    "split.js": "^1.6.2",
+    "tui-editor": "^1.4.10",
     "uuid": "^3.2.1",
     "vue": "^2.5.13",
     "vue-router": "^3.0.1",
-    "w-ui": "^1.1.5"
+    "w-ui": "^1.1.17"
   },
   "eslintConfig": {
     "extends": [

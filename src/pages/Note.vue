@@ -1,89 +1,123 @@
 <template>
   <div class="page-note" @click="globalHide">
     <div class="body-box">
-      <div class="list" v-show="listShow">
-        <div class="com-note-list">
-
-          <div class="date-area">
-            <span>{{bookName}}</span>
-            <span class="tool-bar" @click.stop="doAdd"><i class="icon-plus-circle"></i>分类</span>
-          </div>
-
-          <div class="add-area" v-show="showInput" @click.stop="nullFunc">
-            <input v-model="newCategory" type="text" placeholder="添加分类" @keydown="doAddCategory($event)"/>
-          </div>
-
-          <div class="list-area">
-            <template v-for="note in notes">
-              <div v-if="note.categoryId === '' " :key="note._id" :class="noteId === note._id ? 'note-item active' : 'note-item'" @click="doEditNote(note)">{{note.subject}}</div>
-            </template>
-
-            <Accordion :accordion="true">
-              <AccordionItem v-for="cat in categorys" :key="cat._id" v-if="categorys.length > 0">
-                <span class="title-bar" slot="title">
-                  <input v-if="cat.showEdit" type="text" v-model="editCategoryName" @keydown="doEditCategory($event)"/>
-                  <span v-else class="title-text">{{cat.name}}</span>
-                  <a @click.stop="addNewNote(cat)" class="add-icon"><i class="icon-plus-circle"></i></a>
-                  <a v-show="!cat.showEdit" @click.stop="editCategory(cat)"><i class="icon-edit-2"></i></a>
-                  <a @click.stop="doRemoveCategory(cat)"><i class="icon-trash"></i></a>
-                </span>
-                <template v-for="note in notes">
-                  <div v-if="note.categoryId === cat._id" :key="note._id" :class="noteId === note._id ? 'note-item active' : 'note-item'" @click="doEditNote(note)">{{note.subject}}</div>
-                </template>
-              </AccordionItem>
-              <AccordionItem v-else>
-                请添加分类
-              </AccordionItem>
-            </Accordion>
-          </div>
-        </div>
-      </div>
-      <div class="detail">
-        <div class="editor">
-          <div class="cat-area">
-            <div>
-              分类：
-              <PopSelect v-if="categorys.length > 0" @change="categoryChange" v-model="categoryId">
-                <SelectItem value="" text="默认"></SelectItem>
-                <SelectItem v-for="cat in categorys" :key="'select-' + cat._id" :value="cat._id" :text="cat.name"></SelectItem>
-              </PopSelect>
+      <Split :style="hstlye" :gutterSize="5" ref="split">
+        <SplitPanel :size="leftSize" :minSize="0">
+          <div class="com-note-list">
+            <div class="date-area">
+              <span>{{ bookName }}</span>
+              <span class="tool-bar" @click.stop="doAdd">
+                <i class="icon-plus-circle"></i>分类
+              </span>
             </div>
 
-            <PopSelect mode="menu" @change="menuClick" position="right">
-              <div slot="text"><i class="icon-more-vertical"></i></div>
-              <SelectItem value="delete"><i class="icon-trash-2"></i>删除</SelectItem>
-              <SelectItem value="export"><i class="icon-download"></i>导出pdf</SelectItem>
-            </PopSelect>
+            <div class="add-area" v-show="showInput" @click.stop="nullFunc">
+              <input
+                v-model="newCategory"
+                type="text"
+                placeholder="添加分类"
+                @keydown="doAddCategory($event)"
+              />
+            </div>
+
+            <div class="list-area">
+              <Accordion :accordion="true" :opened="true">
+                <AccordionItem
+                  :open="true"
+                  v-for="cat in categorys"
+                  :key="cat._id"
+                  v-if="categorys.length > 0"
+                >
+                  <span class="title-bar" slot="title">
+                    <input
+                      v-if="cat.showEdit"
+                      type="text"
+                      v-model="editCategoryName"
+                      @keydown="doEditCategory($event)"
+                    />
+                    <span v-else class="title-text">{{ cat.name }}</span>
+                    <a @click.stop="addNewNote(cat)" class="add-icon">
+                      <i class="icon-plus-circle"></i>
+                    </a>
+                    <a v-show="!cat.showEdit" @click.stop="editCategory(cat)">
+                      <i class="icon-edit-2"></i>
+                    </a>
+                    <a @click.stop="doRemoveCategory(cat)">
+                      <i class="icon-trash"></i>
+                    </a>
+                  </span>
+                  <template v-for="note in notes">
+                    <div
+                      v-if="note.categoryId === cat._id"
+                      :key="note._id"
+                      :class="
+                        noteId === note._id ? 'note-item active' : 'note-item'
+                      "
+                      @click="doEditNote(note)"
+                    >
+                      {{ note.subject }}
+                    </div>
+                  </template>
+                </AccordionItem>
+                <AccordionItem v-else>请添加分类</AccordionItem>
+              </Accordion>
+            </div>
           </div>
-          <div ref="editor">
+        </SplitPanel>
+        <SplitPanel :size="rightSize" :minSize="0">
+          <div class="editor">
+            <div class="cat-area">
+              <div class="left-menu">
+                分类：
+                <PopSelect
+                  v-if="categorys.length > 0"
+                  @change="categoryChange"
+                  v-model="categoryId"
+                >
+                  <SelectItem value text="默认"></SelectItem>
+                  <SelectItem
+                    v-for="cat in categorys"
+                    :key="'select-' + cat._id"
+                    :value="cat._id"
+                    :text="cat.name"
+                  ></SelectItem>
+                </PopSelect>
+              </div>
+
+              <PopSelect mode="menu" @change="menuClick" position="right">
+                <div slot="text">
+                  <i class="icon-more-vertical"></i>
+                </div>
+                <SelectItem value="delete">
+                  <i class="icon-trash-2"></i>删除
+                </SelectItem>
+                <SelectItem value="export">
+                  <i class="icon-download"></i>导出pdf
+                </SelectItem>
+              </PopSelect>
+            </div>
+            <div class="editor-eara">
+              <Editor v-if="hstlye > 0" ref="editor" :height="hstlye"></Editor>
+            </div>
           </div>
-          <div class="save-status">
-            <span class="unsave" v-show="unsaved"></span>
-            {{saveStatus}}
-          </div>
-        </div>
-      </div>
+        </SplitPanel>
+      </Split>
     </div>
   </div>
 </template>
 
 <script>
 import moment from 'moment'
-import Editor from 'tui-editor'
-import extScrollSync from 'tui-editor/dist/tui-editor-extScrollSync.js'
-import extTable from 'tui-editor/dist/tui-editor-extTable.js'
-import Viewer from 'tui-editor/dist/tui-editor-Viewer.js'
-import extColorSyntax from 'tui-editor/dist/tui-editor-extColorSyntax.js'
+import Editor from '../components/Editor.vue'
 import { Accordion } from 'w-ui/lib/accordion'
 import { AccordionItem } from 'w-ui/lib/accordion-item'
-import { Alert, Confirm } from 'w-ui/lib/dialog'
+import { Alert, Confirm, Toast } from 'w-ui/lib/dialog'
 import { Select, SelectItem } from '../components/select'
+import Split from '../components/Split/Split.vue'
+import SplitPanel from '../components/Split/SplitPanel.vue'
 
-import './node.less'
+import './note.less'
 import store from '../store'
-import 'codemirror/lib/codemirror.css'
-import '../assets/tui-editor.css' // editor ui
-import '../assets/tui-editor-contents.css' // editor content
 
 export default {
   name: 'index',
@@ -91,7 +125,10 @@ export default {
     Accordion,
     AccordionItem,
     PopSelect: Select,
-    SelectItem
+    SelectItem,
+    Editor,
+    Split,
+    SplitPanel
   },
   props: {
     bookId: {
@@ -107,13 +144,16 @@ export default {
       bookName: '',
       showInput: false,
       categorys: [],
-      listShow: true,
       showSelect: false,
       showMenu: false,
       noteId: '',
       notes: [],
       saveStatus: '',
-      unsaved: false
+      unsaved: false,
+      isEditing: false,
+      hstlye: -1,
+      leftSize: 30,
+      rightSize: 70
     }
   },
   methods: {
@@ -148,7 +188,7 @@ export default {
     },
     updateCategory(categoryId, category) {
       if (categoryId && category) {
-        return store.execute(
+        store.execute(
           'note',
           'updateCategory',
           {
@@ -161,36 +201,53 @@ export default {
         )
       }
     },
-    addNote(title, content, bookId, categoryId) {
-      if (bookId) {
-        return store.execute('note', 'addNote', {
-          subject: title,
-          content: content,
-          createTime: Date.now(),
-          bookId: bookId,
-          categoryId: categoryId
-        })
+    addNote() {
+      let content = this.$refs.editor.getData()
+      if (this.bookId && content) {
+        let lines = content.split('\n')
+        return store
+          .execute('note', 'addNote', {
+            subject: lines[0].replace(/[#+*@!$&^()\[\]``~]/gm, ''),
+            content: content,
+            createTime: Date.now(),
+            bookId: this.bookId,
+            categoryId: this.categoryId
+          })
+          .then(() => {
+            Toast('保存成功!')
+            this.queryAll()
+          })
       }
     },
-    updateNote(noteId, title, content, bookId, categoryId) {
-      if (noteId && bookId) {
-        return store.execute(
-          'note',
-          'updateNote',
-          { _id: noteId },
-          {
-            subject: title,
-            content: content,
-            updateTime: Date.now(),
-            bookId: bookId,
-            categoryId: categoryId
-          }
-        )
+    updateNote() {
+      if (this.noteId && this.bookId) {
+        let content = this.$refs.editor.getData()
+        let lines = content.split('\n')
+        store
+          .execute(
+            'note',
+            'updateNote',
+            { _id: this.noteId },
+            {
+              subject: lines[0].replace(/[#+*@!$&^()\[\]``~]/gm, ''),
+              content: content,
+              updateTime: Date.now(),
+              bookId: this.bookId,
+              categoryId: this.categoryId
+            }
+          )
+          .then(() => {
+            Toast('保存成功!')
+            this.queryAll()
+          })
       }
     },
     removeNote(noteId) {
       if (noteId) {
-        return store.execute('note', 'removeNote', { _id: noteId })
+        store.execute('note', 'removeNote', { _id: noteId }).then(() => {
+          Toast('删除成功!')
+          this.queryAll()
+        })
       }
     },
     addNewNote(cat) {
@@ -198,7 +255,8 @@ export default {
       this.categoryName = cat.name
       this.noteId = ''
       this.saveStatus = '新增成功'
-      this.editor.setValue('')
+      this.isEditing = true
+      this.$refs.editor.setData('')
     },
     editCategory(cat) {
       this.editCategoryName = cat.name
@@ -227,6 +285,7 @@ export default {
             this.categoryId = cat._id
             this.showInput = false
             this.newCategory = ''
+            Toast('保存成功!')
             this.queryAll()
           })
         }
@@ -238,6 +297,7 @@ export default {
           this.updateCategory(this.categoryId, this.editCategoryName).then(
             cat => {
               this.editCategoryName = ''
+              Toast('保存成功!')
               this.queryAll()
             }
           )
@@ -273,10 +333,10 @@ export default {
           this.categoryName = cat.name
         }
       })
-      this.editor.setValue(note.content)
+      this.$refs.editor.setData(note.content)
     },
     menuClick(item) {
-      if (item.value == 'delete') {
+      if (item.value == 'delete' && this.noteId) {
         Confirm('您确认要删除吗？', {
           title: '确认',
           callback: result => {
@@ -292,59 +352,6 @@ export default {
         })
       }
     },
-    bindEditorEvent() {
-      this.editor.eventManager.listen('blur', event => {
-        let val = this.editor.getValue()
-        let lines = val.trim().split(/\n/m)
-        if (lines && lines.length > 0) {
-          let subject = lines[0].replace(/[#*_~]/g, '')
-          if (subject.length > 20) {
-            subject = subject.substr(0, 20) + '...'
-          }
-          if (subject && val) {
-            if (this.noteId) {
-              this.updateNote(
-                this.noteId,
-                subject,
-                val,
-                this.bookId,
-                this.categoryId
-              ).then(() => {
-                this.unsaved = false
-                this.saveStatus = '更新成功'
-                this.queryAll()
-              })
-            } else {
-              this.addNote(subject, val, this.bookId, this.categoryId).then(
-                data => {
-                  this.noteId = data.result._id
-                  this.unsaved = false
-                  this.saveStatus = '新增成功'
-                  this.queryAll()
-                }
-              )
-            }
-          }
-        }
-      })
-      this.editor.eventManager.listen('contentChangedFromWysiwyg', event => {
-        this.unsaved = true
-      })
-      this.editor.eventManager.listen('contentChangedFromMarkdown', event => {
-        this.unsaved = true
-      })
-      eventHub.$on('togglelist', () => {
-        this.doToggleList()
-      })
-      window.addEventListener('resize', () => {
-        if (this.editor.currentMode == 'wysiwyg') {
-          let nh = window.innerHeight - 115 + 'px'
-          let hh = window.innerHeight - 55 + 'px'
-          this.$refs.editor.style.height = hh
-          this.editor.wwEditor.setHeight(nh)
-        }
-      })
-    },
     categoryChange(cat) {
       this.categoryId = cat._id
       this.categoryName = cat.text
@@ -354,31 +361,22 @@ export default {
     globalHide() {}
   },
   mounted() {
+    this.hstlye = window.innerHeight - 55
     this.queryAll()
-    this.$nextTick(() => {
-      let h = window.innerHeight - 55
-      this.editor = new Editor({
-        el: this.$refs.editor,
-        previewStyle: 'vertical',
-        height: h + 'px',
-        initialEditType: 'wysiwyg',
-        useCommandShortcut: true,
-        initialValue: '',
-        exts: [
-          'scrollSync',
-          'colorSyntax',
-          'uml',
-          'chart',
-          'mark',
-          'table',
-          'taskCounter'
-        ]
-      })
-      this.bindEditorEvent()
+
+    document.body.addEventListener('keydown', eve => {
+      //ctrl+s,command+s
+      if ((eve.ctrlKey || eve.metaKey) && eve.keyCode == 83) {
+        if (this.noteId && this.bookId) {
+          this.updateNote()
+        } else if (this.bookId) {
+          this.addNote()
+        }
+      }
     })
   },
   unmouted() {
-    eventHub.$off('togglelist')
+    this.$eventHub.$off('togglelist')
   }
 }
 </script>

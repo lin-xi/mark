@@ -3,19 +3,19 @@ import path from 'path'
 let cache = {}
 let callbacks = []
 
-let getDB = (name) => {
-  // let ppath = path.join(__dirname, '../../data/' + name + '.db')
-  let ppath = path.join(global.app.getPath('userData'), 'mark', name + '.db')
-  // if (process.env.NODE_ENV === 'production') {
-  //   ppath = path.join(global.app.getPath('userData'), 'mark', name + '.db')
-  // }
-  return new Promise((resolve) => {
+let getDB = name => {
+  let ppath = path.join(__dirname, '../../data/' + name + '.db')
+  // let ppath = path.join(global.app.getPath('userData'), 'mark', name + '.db')
+  if (process.env.NODE_ENV === 'production') {
+    ppath = path.join(global.app.getPath('userData'), 'mark', name + '.db')
+  }
+  return new Promise(resolve => {
     if (!cache[name]) {
       cache[name] = 'waiting'
       let ds = new DataStore({
         filename: ppath,
         autoload: true,
-        onload (err) {
+        onload(err) {
           if (err) {
             global.logger.info(err)
             console.log(err)
@@ -28,7 +28,7 @@ let getDB = (name) => {
         }
       })
     } else if (cache[name] === 'waiting') {
-      callbacks.push((_ds) => {
+      callbacks.push(_ds => {
         resolve(_ds)
       })
     } else {
@@ -40,7 +40,7 @@ let getDB = (name) => {
 export default {
   getDB,
 
-  add (db, doc) {
+  add(db, doc) {
     return new Promise(resolve => {
       db.insert(doc, (err, newDoc) => {
         if (err) {
@@ -51,22 +51,27 @@ export default {
     })
   },
 
-  update (db, doc, newDoc) {
+  update(db, doc, newDoc) {
     return new Promise(resolve => {
-      db.update(doc, {
-        $set: newDoc
-      }, {
-        multi: true
-      }, (err, numReplaced) => {
-        if (err) {
-          console.error(err)
+      db.update(
+        doc,
+        {
+          $set: newDoc
+        },
+        {
+          multi: true
+        },
+        (err, numReplaced) => {
+          if (err) {
+            console.error(err)
+          }
+          resolve(numReplaced)
         }
-        resolve(numReplaced)
-      })
+      )
     })
   },
 
-  remove (db, doc) {
+  remove(db, doc) {
     return new Promise(resolve => {
       db.remove(doc, (err, newDoc) => {
         if (err) {
@@ -77,7 +82,7 @@ export default {
     })
   },
 
-  getDao (name) {
+  getDao(name) {
     return require(`./${name}.js`)
   }
 }

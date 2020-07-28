@@ -2,10 +2,18 @@
   <div class="app">
     <div class="body">
       <div class="menu-area">
-        <img src="./logo.svg" @click="doShowAbout"/>
+        <img src="./logo.svg" @click="doShowAbout" />
         <ul class="menu">
-          <li><a href="#/plan"><IconText text="计划" color="#2a72c0"></IconText></a></li>
-          <li><a href="#/noteDesk"><IconText text="笔记" color="rgb(211, 93, 62)"></IconText></a></li>
+          <li>
+            <a href="#/plan"
+              ><IconText text="计划" color="#2a72c0"></IconText
+            ></a>
+          </li>
+          <li>
+            <a href="#/noteDesk"
+              ><IconText text="笔记" color="rgb(211, 93, 62)"></IconText
+            ></a>
+          </li>
         </ul>
       </div>
       <div class="content-area">
@@ -13,32 +21,33 @@
       </div>
 
       <div class="about-panel" v-if="showAbout">
-        <div class="mask" @click="doHideAbout">
-        </div>
+        <div class="mask" @click="doHideAbout"></div>
         <div class="about-dialog">
-          <p class="logo"><img src="./logo.png"/></p>
-          <p class="version">2.0.1</p>
-          <p class="desc">Mark是一个完全免费的开源软件，致力于做好用的效率提升工具，欢迎你提出宝贵的的意见<br><br>
-          如果喜欢，请给我的github项目点赞<br>
-          如果觉得很棒，也可以捐赠共勉，谢谢</p>
-          <br>
+          <p class="logo"><img src="./logo.png" /></p>
+          <p class="version">{{ version }}</p>
+          <p class="desc">
+            Mark是一个完全免费的开源软件，致力于做好用的效率提升工具<br /><br />
+            <br />
+          </p>
+
           <div class="link">
             <div>
-              <a target="_blank" @click="jump('https://github.com/lin-xi/mark/issues')">意见建议</a>
+              <a
+                target="_blank"
+                @click="jump('https://github.com/lin-xi/mark/issues')"
+                >意见建议</a
+              >
             </div>
             <div>
-              <a target="_blank" @click="jump('https://github.com/lin-xi/mark')">点赞</a>
-            </div>
-            <div>
-              <a target="_blank" @click="jump('https://github.com/lin-xi/mark')">捐赠</a>
+              <a target="_blank" @click="jump('https://github.com/lin-xi/mark')"
+                >点赞</a
+              >
             </div>
           </div>
         </div>
       </div>
-      <div class="setting-panel">
-      </div>
+      <div class="setting-panel"></div>
     </div>
-
   </div>
 </template>
 
@@ -48,13 +57,8 @@ import './assets/fonts/icomoon.ttf'
 import './assets/fonts/icomoon.woff'
 import './assets/fonts/icomoon.svg'
 
-// import './assets/w-ui/themify.eot'
-// import './assets/w-ui/themify.woff'
-// import './assets/w-ui/themify.ttf'
-// import './assets/w-ui/themify.svg'
-
 import './assets/style.css'
-
+import package from '../package.json'
 import IconText from './components/IconText.vue'
 const { ipcRenderer, shell } = window.require('electron')
 
@@ -65,7 +69,8 @@ export default {
   },
   data() {
     return {
-      showAbout: false
+      showAbout: false,
+      version: package.version
     }
   },
   methods: {
@@ -152,10 +157,7 @@ body {
   font-family: arial, -apple-system, BlinkMacSystemFont, 'Microsoft YaHei',
     sans-serif;
 }
-ul,
-li {
-  list-style: none;
-}
+
 a {
   text-decoration: none;
 }

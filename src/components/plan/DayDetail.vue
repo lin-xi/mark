@@ -2,19 +2,22 @@
   <div class="day-detail-page">
     <div class="form">
       <div class="title">
-        {{task.subject}}
+        {{ task.subject }}
         <span>
-          <a @click.stop="doRemoveTask(task)"><i class="icon-trash"></i></a>
-          <a @click.stop="hidePanel(task)"><i class="icon-x"></i></a>
+          <a @click.stop="doRemoveTask(task)">
+            <i class="icon-trash"></i>
+          </a>
+          <a @click.stop="hidePanel(task)">
+            <i class="icon-x"></i>
+          </a>
         </span>
       </div>
-      <div class="date">{{dateTime}}</div>
+      <div class="date">{{ dateTime }}</div>
       <div class="tag-area">
         <Tag :tags="task.tags"></Tag>
       </div>
       <div class="detail-area">
-        <p>详细</p>
-        <textarea v-model="task.content" @blur="updateContent($event)"></textarea>
+        <Editor v-if="eh>0" ref="editor" :height="eh" :value="task.content"></Editor>
       </div>
     </div>
   </div>
@@ -23,20 +26,22 @@
 <script>
 import moment from 'moment'
 import { Tag } from 'w-ui/lib/tag'
+import Editor from '../Editor.vue'
 
 import store from '../../store'
-import './dayDetail.less'
 
 export default {
   name: 'plan-day',
   data() {
     return {
       task: { tags: [] },
-      tag: ''
+      tag: '',
+      eh: -1
     }
   },
   components: {
-    Tag
+    Tag,
+    Editor
   },
   computed: {
     dateTime() {
@@ -61,21 +66,17 @@ export default {
             this.task.tags = []
           }
           this.task.tags.push(this.tag)
-          this.updateTask(this.task._id, {
-            tags: this.task.tags
-          })
+          this.doUpdate()
         }
       }
-    },
-    stateChange(task) {
-      this.updateTask(task._id, { status: 1, updateTime: Date.now() })
     },
     computedTime(task) {
       return moment(task.createTime).fromNow()
     },
-    updateContent() {
+    doUpdate() {
       this.updateTask(this.task._id, {
-        content: this.task.content,
+        content: this.$refs.editor.getData(),
+        tags: this.task.tags,
         updateTime: Date.now()
       })
     },
@@ -89,27 +90,95 @@ export default {
     }
   },
   mounted() {
+    this.eh = window.innerHeight - 160;
     this.task = this.$parent.currentTask
+
     this.$watch(
       () => {
         return this.$parent.currentTask
       },
       (val, oldVal) => {
-        this.task = val
+        this.task = val;
+        this.$refs.editor.setData(val.content);
       }
     )
 
-    this.$watch(
-      () => {
-        return this.task.tags
-      },
-      (val, oldVal) => {
-        this.updateTask(this.task._id, {
-          tags: this.task.tags,
-          updateTime: Date.now()
-        })
+    document.body.addEventListener('keydown', (eve) => {
+      //ctrl+s,command+s
+      if ((eve.ctrlKey || eve.metaKey) && eve.keyCode == 83) {
+        this.doUpdate()
       }
-    )
+    })
   }
 }
 </script>
+
+<style lang="less" scoped>
+.day-detail-page {
+  width: 100%;
+  height: 100%;
+
+  .form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      background-color: #f5f5f5;
+      font-size: 16px;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        a {
+          color: #888;
+          font-size: 14px;
+          i.icon-trash {
+            font-size: 18px;
+            cursor: pointer;
+          }
+          i.icon-x {
+            margin-left: 15px;
+            font-size: 22px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    .date {
+      font-size: 16px;
+      padding: 5px;
+      color: #ccc;
+      text-align: right;
+    }
+    .tag-area {
+      padding: 10px;
+      .tags-input {
+        border: none;
+        width: 150px;
+        height: 28px;
+      }
+    }
+
+    .detail-area {
+      padding: 10px;
+      flex: 0.5;
+    }
+
+    input {
+      border: 1px #e0e0e0 solid;
+      height: 40px;
+      width: 380px;
+      border-radius: 4px;
+      outline: none;
+      font-size: 14px;
+      text-indent: 10px;
+    }
+  }
+}
+</style>
