@@ -67,7 +67,7 @@
     "highlight.js": "^9.12.0",
     "moment": "^2.20.1",
     "nedb": "^1.8.0",
-    "node-fetch": "^2.0.0",
+    "node-fetch": "^2.6.1",
     "split.js": "^1.6.2",
     "tui-editor": "^1.4.10",
     "uuid": "^3.2.1",
