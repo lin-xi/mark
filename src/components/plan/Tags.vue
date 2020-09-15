@@ -1,8 +1,6 @@
 <template>
   <div class="com-plan-tags">
-    <span v-for="(tag, i) in twoTags" :key="'tags-' + i">
-      {{tag}}
-    </span>
+    <span v-for="(tag, i) in twoTags" :key="'tags-' + i">{{tag}}</span>
   </div>
 </template>
 
@@ -42,7 +40,7 @@ export default {
 
 <style lang="less">
 .com-plan-tags {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 

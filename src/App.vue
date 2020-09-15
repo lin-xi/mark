@@ -5,14 +5,14 @@
         <img src="./logo.svg" @click="doShowAbout" />
         <ul class="menu">
           <li>
-            <a href="#/plan"
-              ><IconText text="计划" color="#2a72c0"></IconText
-            ></a>
+            <a href="#/plan">
+              <IconText text="计划" color="#2a72c0"></IconText>
+            </a>
           </li>
           <li>
-            <a href="#/noteDesk"
-              ><IconText text="笔记" color="rgb(211, 93, 62)"></IconText
-            ></a>
+            <a href="#/noteDesk">
+              <IconText text="笔记" color="rgb(211, 93, 62)"></IconText>
+            </a>
           </li>
         </ul>
       </div>
@@ -23,25 +23,23 @@
       <div class="about-panel" v-if="showAbout">
         <div class="mask" @click="doHideAbout"></div>
         <div class="about-dialog">
-          <p class="logo"><img src="./logo.png" /></p>
+          <p class="logo">
+            <img src="./logo.png" />
+          </p>
           <p class="version">{{ version }}</p>
           <p class="desc">
-            Mark是一个完全免费的开源软件，致力于做好用的效率提升工具<br /><br />
+            Mark是一个完全免费的开源软件，致力于做好用的效率提升工具
+            <br />
+            <br />
             <br />
           </p>
 
           <div class="link">
             <div>
-              <a
-                target="_blank"
-                @click="jump('https://github.com/lin-xi/mark/issues')"
-                >意见建议</a
-              >
+              <a target="_blank" @click="jump('https://github.com/lin-xi/mark/issues')">意见建议</a>
             </div>
             <div>
-              <a target="_blank" @click="jump('https://github.com/lin-xi/mark')"
-                >点赞</a
-              >
+              <a target="_blank" @click="jump('https://github.com/lin-xi/mark')">点赞</a>
             </div>
           </div>
         </div>
@@ -82,6 +80,9 @@ export default {
     },
     jump(url) {
       shell.openExternal(url)
+    },
+    showLogin() {
+
     }
   },
   mounted() {
